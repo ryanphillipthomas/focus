@@ -6,6 +6,8 @@
 	<string>We use notifications to remind you when your focus sessions are complete.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>We use your calendar to schedule focus blocks.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We use Apple Music to play focus-enhancing soundtracks.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

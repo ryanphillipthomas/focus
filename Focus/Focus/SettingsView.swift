@@ -11,11 +11,13 @@ import StoreKit
 
 struct SettingsView: View {
     @StateObject private var calendarManager = CalendarManager()
+    @StateObject private var musicManager = AppleMusicManager()
 
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
-    @AppStorage("isCalendarConnected") private var isCalendarConnected = false
-    @AppStorage("isAppleMusicConnected") private var isAppleMusicConnected = false
     @AppStorage("isSpotifyConnected") private var isSpotifyConnected = false
+    
+    @StateObject private var calendarViewModel = CalendarListViewModel()
+    @State private var showCalendarPicker = false
     
     @Environment(\.modelContext) private var modelContext
     @Query private var focusItems: [Item] // Replace with your model name
@@ -23,23 +25,56 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section(header: Text("Integrations")) {
-                // Start calendar sync or disconnect
-                if isCalendarConnected {
-                    Button("Add Test Focus Event") {
-                        calendarManager.createTestEvent()
-                    }
+                //
+                Button("Choose Calendar") {
+                    showCalendarPicker = true
+                }
+
+                HStack {
+                    Text("Selected Calendar")
+                    Spacer()
+                    Text(calendarViewModel.selectedCalendarTitle())
+                        .foregroundColor(.secondary)
+                }
+            //
+                if calendarManager.isAuthorized {
+                    Label("Connected to Calendar", systemImage: "checkmark.circle")
+                        .foregroundColor(.green)
                 } else {
-                    Button("Request Access"){
+                    Button("Enable Calendar Access") {
                         calendarManager.requestAccess { granted in
-                            if !granted {
-                                isCalendarConnected = false
+                            if granted {
+                                print("✅ Calendar access granted by user.")
+                            } else {
+                                print("❌ Calendar access denied by user.")
                             }
                         }
                     }
                 }
+                
+                if musicManager.isAuthorized {
+                    Button("Play Sample Song") {
+                        Task {
+                            await musicManager.requestAccess() // ensures auth
+                            await musicManager.playSampleSong() //play song
+                        }
+                    }
+                    .disabled(!musicManager.isAuthorized || !musicManager.isSubscribed)
+                    
+                    Label("Connected to Apple Music", systemImage: "checkmark.circle")
+                        .foregroundColor(.green)
+                } else {
+                    Button("Connect Apple Music") {
+                        Task {
+                            await musicManager.requestAccess()
+                        }
+                    }
+                }
 
-                Button(isAppleMusicConnected ? "Disconnect Apple Music" : "Connect Apple Music") {
-                    // Launch Apple Music authorization
+                if !musicManager.statusMessage.isEmpty {
+                    Text(musicManager.statusMessage)
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
                 }
 
                 Button(isSpotifyConnected ? "Disconnect Spotify" : "Connect Spotify") {
@@ -72,6 +107,12 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
+        //
+        .sheet(isPresented: $showCalendarPicker) {
+            NavigationView {
+                CalendarListView(viewModel: calendarViewModel)
+            }
+        }
     }
     
     private func requestReview() {
