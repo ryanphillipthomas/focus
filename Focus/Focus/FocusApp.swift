@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct FocusApp: App {
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +27,11 @@ struct FocusApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasCompletedOnboarding {
+                ContentView()
+            } else {
+                OnboardingFlowView()
+            }
         }
         .modelContainer(sharedModelContainer)
     }

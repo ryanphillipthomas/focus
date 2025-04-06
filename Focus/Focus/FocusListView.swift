@@ -17,36 +17,76 @@ struct FocusListView: View {
                         Spacer()
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(.systemGroupedBackground))
+                    .background(backgroundColor)
                 } else {
                     List {
                         ForEach(items) { item in
                             NavigationLink {
-                                Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                                    .navigationTitle("Item Detail")
+                                ItemDetailView(item: item)
                             } label: {
-                                Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                                HStack {
+                                    Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                                    Spacer()
+#if os(macOS)
+                                    Button {
+                                        deleteItem(item)
+                                    } label: {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.red)
+                                    }
+                                    .buttonStyle(.borderless)
+#endif
+                                }
                             }
                         }
+#if os(iOS)
                         .onDelete(perform: deleteItems)
+#endif
                     }
+
+                    .background(backgroundColor)
+#if os(iOS)
                     .listStyle(.insetGrouped)
-                    .background(Color(.systemGroupedBackground))
+#endif
                 }
             }
             .navigationTitle("Focus List")
             .toolbar {
+#if os(iOS)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
-
+#endif
+                
+#if os(iOS)
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: addItem) {
                         Label("Add", systemImage: "plus")
                     }
                 }
+#else
+                ToolbarItem {
+                    Button(action: addItem) {
+                        Label("Add", systemImage: "plus")
+                    }
+                }
+#endif
             }
         }
+    }
+
+    private func deleteItem(_ item: Item) {
+        withAnimation {
+            modelContext.delete(item)
+        }
+    }
+
+    private var backgroundColor: some View {
+#if os(iOS)
+        return Color(.systemGroupedBackground)
+#else
+        return Color(nsColor: .windowBackgroundColor)
+#endif
     }
 
     private func addItem() {
@@ -69,9 +109,4 @@ struct FocusListView: View {
             }
         }
     }
-}
-
-#Preview {
-    FocusListView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

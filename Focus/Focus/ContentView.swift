@@ -1,9 +1,3 @@
-//
-//  ContentView.swift
-//  Focus
-//
-//  Created by Ryan Thomas on 4/5/25.
-
 import SwiftUI
 
 struct ContentView: View {
@@ -12,6 +6,11 @@ struct ContentView: View {
             FocusListView()
                 .tabItem {
                     Label("Focus", systemImage: "target")
+                }
+
+            AiView()
+                .tabItem {
+                    Label("Ai", systemImage: "brain")
                 }
 
             SettingsView()
