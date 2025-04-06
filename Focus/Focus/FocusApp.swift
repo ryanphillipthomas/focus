@@ -11,12 +11,24 @@ import SwiftData
 @main
 struct FocusApp: App {
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
+    @AppStorage("accentColorName") private var accentColorName: String = AccentColorOption.blue.rawValue
+    
+    var accentColor: Color {
+        AccentColorOption(rawValue: accentColorName)?.color ?? .blue
+    }
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false)
+//
+//        let modelConfiguration = ModelConfiguration(
+//            schema: schema,
+//            cloudKitDatabase: .private("iCloud.com.ryanthomas.focus")
+//        )
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -29,6 +41,7 @@ struct FocusApp: App {
         WindowGroup {
             if hasCompletedOnboarding {
                 ContentView()
+                    .accentColor(accentColor)
             } else {
                 OnboardingFlowView()
             }

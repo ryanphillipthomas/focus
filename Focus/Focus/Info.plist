@@ -8,9 +8,57 @@
 	<string>We use your calendar to schedule focus blocks.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>We use Apple Music to play focus-enhancing soundtracks.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>This app needs access to your reminders to sync tasks.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>We use your health data to optimize your focus and scheduling.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>We use your health data to recommend time blocks and tasks</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>AppIconRed</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>AppIconRed</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>AppIconBlue</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>AppIconBlue</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>AppIconGreen</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>AppIconGreen</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>AppIconPurple</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>AppIconPurple</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

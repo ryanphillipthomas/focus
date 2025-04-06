@@ -3,6 +3,11 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
+            MindDumpView()
+                .tabItem {
+                Label("Mind Dump", systemImage: "square.and.pencil")
+                }
+            
             FocusListView()
                 .tabItem {
                     Label("Focus", systemImage: "target")
