@@ -230,7 +230,7 @@ struct SettingsView: View {
                 }
             case .appearancePicker:
                 NavigationView {
-                    CustomizationView()
+                    AltIconDebugView()
                 }
             }
         }

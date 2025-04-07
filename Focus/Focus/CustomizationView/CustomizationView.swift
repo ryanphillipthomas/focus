@@ -67,14 +67,16 @@ struct CustomizationView: View {
     }
 
     private func changeAppIcon(to icon: AppIcon) {
+        print("Attempting to change to icon: \(icon.iconName ?? "default")")
         guard UIApplication.shared.supportsAlternateIcons else { return }
-        UIApplication.shared.setAlternateIconName(icon.iconName) { error in
-            print("Attempting to change to icon: \(icon.iconName ?? "default")")
-            if let error = error {
-                print("Failed to change app icon: \(error.localizedDescription)")
-            } else {
-                currentAppIcon = icon
+            UIApplication.shared.setAlternateIconName(icon.iconName) { error in
+                print("Attempting to change to icon: \(icon.iconName ?? "default")")
+                if let error = error {
+                    print("Failed to change app icon: \(error.localizedDescription)")
+                } else {
+                    print("Changed to icon: \(icon.iconName ?? "default")")
+                    currentAppIcon = icon
+                }
             }
         }
-    }
 }
