@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CustomizationView: View {
     @AppStorage("accentColorName") private var accentColorName: String = AccentColorOption.blue.rawValue
+    
     @State private var currentAppIcon: AppIcon = {
         let current = UIApplication.shared.alternateIconName
         return AppIcon.allCases.first(where: { $0.iconName == current }) ?? .default

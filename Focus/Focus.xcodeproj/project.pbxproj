@@ -309,6 +309,7 @@
 		0A49093E2DA182BC005DD72F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Purple AppIcon-Red AppIcon-Green AppIcon-Blue AppIcon-Orange";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Focus/Focus.entitlements;
@@ -351,6 +352,7 @@
 		0A49093F2DA182BC005DD72F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-Purple AppIcon-Red AppIcon-Green AppIcon-Blue AppIcon-Orange";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Focus/Focus.entitlements;

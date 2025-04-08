@@ -10,6 +10,8 @@ import StoreKit
 
 
 struct SettingsView: View {
+    @EnvironmentObject var model: Model
+
     @StateObject private var calendarManager = CalendarManager()
     @StateObject private var calendarViewModel = CalendarListViewModel()
     @StateObject private var musicManager = AppleMusicManager()
@@ -100,6 +102,15 @@ struct SettingsView: View {
             }
 
             // ICLOUD
+            
+            // NOTIFICATIONS
+            Section(header: Text("Notifications")) {
+                Button("Manage Notification Settings") {
+                    activeSheet = .notificationsPicker
+                }
+            }
+
+            // NOTIFICATIONS
             
             // CALENDAR
             Section(header: Text("Calendar")) {
@@ -230,7 +241,11 @@ struct SettingsView: View {
                 }
             case .appearancePicker:
                 NavigationView {
-                    AltIconDebugView()
+                    CustomizationView()
+                }
+            case .notificationsPicker:
+                NavigationView {
+                    NotificationTestView()
                 }
             }
         }

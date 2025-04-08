@@ -11,12 +11,14 @@ enum SettingsSheet: Identifiable {
     case subscription
     case calendarPicker
     case appearancePicker
+    case notificationsPicker
 
     var id: String {
         switch self {
         case .subscription: return "subscription"
         case .calendarPicker: return "calendar"
         case .appearancePicker: return "appearance"
+        case .notificationsPicker: return "notifications"
         }
     }
 }

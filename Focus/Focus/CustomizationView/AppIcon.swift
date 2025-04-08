@@ -8,10 +8,10 @@ import SwiftUI
 
 enum AppIcon: String, CaseIterable {
     case `default` = "AppIcon"
-    case red = "AppIconRed"
-    case blue = "AppIconBlue"
-    case green = "AppIconGreen"
-    case purple = "AppIconPurple"
+    case red = "AppIcon-Red"
+    case blue = "AppIcon-Blue"
+    case green = "AppIcon-Green"
+    case purple = "AppIcon-Purple"
 
     var iconName: String? {
         switch self {
