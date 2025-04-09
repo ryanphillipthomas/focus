@@ -14,7 +14,10 @@ class AnalyticsManager {
     private init() {
         // Add your providers here
         providers.append(FirebaseAnalyticsProvider())
-        // Future: providers.append(MixpanelProvider())
+
+        // ✅ Add Mixpanel with your token
+        let mixpanelToken = "f4aa645666205624417306f1f7f168fb"
+        providers.append(MixpanelAnalyticsProvider(token: mixpanelToken))
     }
 
     func logEvent(_ name: String, parameters: [String: Any]? = nil) {

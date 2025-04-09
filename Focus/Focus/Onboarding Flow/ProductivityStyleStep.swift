@@ -44,5 +44,6 @@ struct ProductivityStyleStep: View {
             .disabled(selectedStyles.isEmpty)
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

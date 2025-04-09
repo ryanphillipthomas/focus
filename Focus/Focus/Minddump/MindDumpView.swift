@@ -13,5 +13,6 @@ struct MindDumpView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
         }
+        .analyticsScreen(self)
     }
 }

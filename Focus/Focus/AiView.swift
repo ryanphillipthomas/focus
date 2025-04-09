@@ -22,5 +22,6 @@ struct AiView: View {
             .padding()
             .navigationTitle("Ai")
         }
+        .analyticsScreen(self)
     }
 }

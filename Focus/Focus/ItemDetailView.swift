@@ -30,6 +30,7 @@ struct ItemDetailView: View {
             stopTimer()
             save()
         }
+        .analyticsScreen(self)
     }
 
     var timeFormatted: String {

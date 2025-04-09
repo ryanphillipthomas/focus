@@ -21,5 +21,6 @@ struct WelcomeStep: View {
             .buttonStyle(.borderedProminent)
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

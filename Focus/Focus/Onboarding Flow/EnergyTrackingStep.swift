@@ -37,5 +37,6 @@ struct EnergyTrackingStep: View {
             Spacer()
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

@@ -39,5 +39,6 @@ struct AudioPreferencesStep: View {
             Spacer()
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

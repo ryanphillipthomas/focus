@@ -73,6 +73,7 @@ struct FocusListView: View {
 #endif
             }
         }
+        .analyticsScreen(self)
     }
 
     private func deleteItem(_ item: Item) {

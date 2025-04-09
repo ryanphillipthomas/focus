@@ -242,6 +242,7 @@ struct SettingsView: View {
 
         // ROOT
         .navigationTitle("Settings")
+        .analyticsScreen(self)
         
         .sheet(item: $activeSheet) { sheet in
             switch sheet {

@@ -65,6 +65,7 @@ struct CustomizationView: View {
         }
         .accentColor(selectedAccent.color)
         .navigationTitle("Customize")
+        .analyticsScreen(self)
     }
 
     private func changeAppIcon(to icon: AppIcon) {

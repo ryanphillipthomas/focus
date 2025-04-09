@@ -35,5 +35,6 @@ struct NotificationPermissionStep: View {
             Spacer()
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

@@ -28,5 +28,6 @@ struct WorkHoursStep: View {
             Spacer()
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

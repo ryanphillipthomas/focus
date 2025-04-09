@@ -45,5 +45,6 @@ struct AnimalCompanionStep: View {
             Spacer()
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

@@ -37,5 +37,6 @@ struct CalendarSyncStep: View {
             Spacer()
         }
         .padding()
+        .analyticsScreen(self)
     }
 }

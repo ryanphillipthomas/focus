@@ -37,5 +37,6 @@ struct CalendarListView: View {
             }
         }
         .navigationTitle("Select Calendar")
+        .analyticsScreen(self)
     }
 }

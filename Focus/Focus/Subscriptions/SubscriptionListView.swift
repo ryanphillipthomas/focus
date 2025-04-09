@@ -52,6 +52,7 @@ struct SubscriptionListView: View {
             }
         }
         .navigationTitle("Focx Pro")
+        .analyticsScreen(self)
         .task {
             if viewModel.products.isEmpty {
                 await viewModel.loadProducts()
