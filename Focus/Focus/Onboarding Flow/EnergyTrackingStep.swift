@@ -16,12 +16,14 @@ struct EnergyTrackingStep: View {
                 .multilineTextAlignment(.center)
 
             Button("Connect Apple Health") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_apple_health")
                 viewModel.energyTrackingEnabled = true
                 viewModel.next()
             }
             .buttonStyle(.bordered)
 
             Button("Set Manually") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_health_manual")
                 viewModel.energyTrackingEnabled = false
                 viewModel.next()
             }

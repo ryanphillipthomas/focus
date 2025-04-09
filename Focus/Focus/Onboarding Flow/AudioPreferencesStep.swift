@@ -16,18 +16,21 @@ struct AudioPreferencesStep: View {
                 .multilineTextAlignment(.center)
 
             Button("Connect Spotify") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_spotify")
                 viewModel.musicService = "Spotify"
                 viewModel.next()
             }
             .buttonStyle(.bordered)
 
             Button("Connect Apple Music") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_apple_music")
                 viewModel.musicService = "Apple Music"
                 viewModel.next()
             }
             .buttonStyle(.bordered)
 
             Button("No thanks") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_no_thanks")
                 viewModel.musicService = nil
                 viewModel.next()
             }

@@ -17,7 +17,7 @@ struct NotificationTestView: View {
             List {
                 Section {
                     Button("Request Permission") {
-                        requestNotificationPermission()
+                        FirebaseManager.shared.requestNotificationPermissions()
                     }
                 }
 
@@ -62,16 +62,6 @@ func scheduleTestNotification(type: NotificationType, in seconds: TimeInterval =
             print("Failed to schedule test notification: \(error)")
         } else {
             print("Scheduled notification for: \(type.title)")
-        }
-    }
-}
-
-func requestNotificationPermission() {
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-        if let error = error {
-            print("Error requesting notification permission: \(error)")
-        } else {
-            print("Permission granted: \(granted)")
         }
     }
 }

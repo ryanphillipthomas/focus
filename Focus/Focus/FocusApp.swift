@@ -9,24 +9,12 @@ import SwiftUI
 import SwiftData
 import FirebaseCore
 import FirebaseMessaging
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
-    
-    func application(_ application: UIApplication,
-                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Messaging.messaging().apnsToken = deviceToken
-    }
-}
+import UserNotifications
 
 @main
 struct FocusApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
     @AppStorage("accentColorName") private var accentColorName: String = AccentColorOption.blue.rawValue
     
@@ -59,8 +47,14 @@ struct FocusApp: App {
             if hasCompletedOnboarding {
                 ContentView()
                     .accentColor(accentColor)
+                    .onAppear {
+                        _ = FirebaseManager.shared // ✅ Trigger setup once
+                    }
             } else {
                 OnboardingFlowView()
+                    .onAppear {
+                        _ = FirebaseManager.shared // ✅ Trigger setup once
+                    }
             }
         }
         .modelContainer(sharedModelContainer)

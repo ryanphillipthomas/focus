@@ -16,17 +16,20 @@ struct CalendarSyncStep: View {
 
             Button("Connect Google Calendar") {
                 // Add connection logic
+                AnalyticsManager.shared.logEvent("onboarding_selection_google_calendar")
                 viewModel.next()
             }
             .buttonStyle(.borderedProminent)
 
             Button("Connect Apple Calendar") {
                 // Add connection logic
+                AnalyticsManager.shared.logEvent("onboarding_selection_apple_calendar")
                 viewModel.next()
             }
             .buttonStyle(.bordered)
 
             Button("Skip for now") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_skip_for_now")
                 viewModel.next()
             }
             .foregroundColor(.secondary)

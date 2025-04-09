@@ -16,6 +16,7 @@ struct ProductivityStyleStep: View {
             Text("How do you like to work?").font(.title2)
             ForEach(styles, id: \.self) { style in
                 Button(action: {
+                    AnalyticsManager.shared.logEvent("onboarding_selection_work")
                     if selectedStyles.contains(style) {
                         selectedStyles.remove(style)
                     } else {
@@ -36,6 +37,7 @@ struct ProductivityStyleStep: View {
             }
             Spacer()
             Button("Next") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_next")
                 viewModel.productivityStyle = Array(selectedStyles)
                 viewModel.next()
             }

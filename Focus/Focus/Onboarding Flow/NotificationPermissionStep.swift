@@ -21,29 +21,19 @@ struct NotificationPermissionStep: View {
                 .padding()
 
             Button("Allow Notifications") {
-                requestNotificationPermission()
+                AnalyticsManager.shared.logEvent("onboarding_selection_allow_notifications")
+                FirebaseManager.shared.requestNotificationPermissions()
                 viewModel.next()
             }
             .buttonStyle(.borderedProminent)
 
             Button("Skip") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_skip")
                 viewModel.next()
             }
             .foregroundColor(.secondary)
             Spacer()
         }
         .padding()
-    }
-
-    func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
-            if let error = error {
-                print("❌ Notification permission error: \(error)")
-            } else {
-                print("🔔 Notification permission granted: \(granted)")
-                
-                notificationsEnabled = granted
-            }
-        }
     }
 }

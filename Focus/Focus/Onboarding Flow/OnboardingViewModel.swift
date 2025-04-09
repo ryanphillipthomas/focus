@@ -17,10 +17,12 @@ class OnboardingViewModel: ObservableObject {
     @Published var selectedAnimal: String = "Fox"
 
     func next() {
+        AnalyticsManager.shared.logEvent("onboarding_selection_next")
         if currentStep < numberOfSteps { currentStep += 1 }
     }
 
     func back() {
+        AnalyticsManager.shared.logEvent("onboarding_selection_back")
         if currentStep > 0 { currentStep -= 1 }
     }
 }

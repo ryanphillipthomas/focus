@@ -20,6 +20,7 @@ struct AnimalCompanionStep: View {
 
             ForEach(animals, id: \.self) { animal in
                 Button(action: {
+                    AnalyticsManager.shared.logEvent("onboarding_selection_animal")
                     selectedAnimal = animal
                 }) {
                     HStack {

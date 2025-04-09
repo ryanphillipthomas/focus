@@ -32,7 +32,6 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            
             // PRO
             Section(header: Text("Account")) {
                 HStack {
@@ -43,6 +42,7 @@ struct SettingsView: View {
                 }
 
                 Button("Upgrade to Pro 🚀") {
+                    AnalyticsManager.shared.logEvent("settings_selection_upgrade_to_pro")
                     activeSheet = .subscription
                 }
             }
@@ -65,12 +65,14 @@ struct SettingsView: View {
 
                     Button("Refresh Health Data") {
                         Task {
+                            AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
                             await healthManager.fetchHealthData()
                         }
                     }
                 } else {
                     Button("Connect Apple Health") {
                         Task {
+                            AnalyticsManager.shared.logEvent("settings_selection_connect_health")
                             await healthManager.requestAuthorization()
                         }
                     }
@@ -81,6 +83,7 @@ struct SettingsView: View {
             // CUSTOMIZATION
             Section(header: Text("Appearance")) {
                 Button("Customize") {
+                    AnalyticsManager.shared.logEvent("settings_selection_customize")
                     activeSheet = .appearancePicker
                 }
             }
@@ -97,6 +100,7 @@ struct SettingsView: View {
                 }
 
                 Button("Refresh iCloud Status") {
+                    AnalyticsManager.shared.logEvent("settings_selection_refresh_icloud")
                     iCloudStatus.checkiCloudStatus()
                 }
             }
@@ -106,6 +110,7 @@ struct SettingsView: View {
             // NOTIFICATIONS
             Section(header: Text("Notifications")) {
                 Button("Manage Notification Settings") {
+                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
                     activeSheet = .notificationsPicker
                 }
             }
@@ -115,6 +120,7 @@ struct SettingsView: View {
             // CALENDAR
             Section(header: Text("Calendar")) {
                 Button("Choose Calendar") {
+                    AnalyticsManager.shared.logEvent("settings_selection_choose_calendar")
                     activeSheet = .calendarPicker
                 }
                 
@@ -129,6 +135,7 @@ struct SettingsView: View {
                         .foregroundColor(.green)
                 } else {
                     Button("Enable Calendar Access") {
+                        AnalyticsManager.shared.logEvent("settings_selection_enable_calendar")
                         calendarManager.requestAccess { granted in
                             if granted {
                                 print("✅ Calendar access granted by user.")
@@ -152,15 +159,18 @@ struct SettingsView: View {
                     }
 
                     Button("Fetch Reminders") {
+                        AnalyticsManager.shared.logEvent("settings_selection_fetch_reminders")
                         reminderManager.fetchReminders()
                     }
 
                     Button("Add Test Reminder") {
+                        AnalyticsManager.shared.logEvent("settings_selection_add_test_reminder")
                         reminderManager.addReminder(title: "Test Reminder", dueDate: Date().addingTimeInterval(3600))
                     }
 
                 } else {
                     Button("Enable Reminder Access") {
+                        AnalyticsManager.shared.logEvent("settings_selection_enable_reminders")
                         reminderManager.requestAccess { granted in
                             print(granted ? "✅ Reminder access granted" : "❌ Reminder access denied")
                         }
@@ -174,6 +184,7 @@ struct SettingsView: View {
             Section(header: Text("Music")) {
                 if musicManager.isAuthorized {
                     Button("Play Sample Song") {
+                        AnalyticsManager.shared.logEvent("settings_selection_play_song")
                         Task {
                             await musicManager.requestAccess() // ensures auth
                             await musicManager.playSampleSong() //play song
@@ -185,6 +196,7 @@ struct SettingsView: View {
                         .foregroundColor(.green)
                 } else {
                     Button("Connect Apple Music") {
+                        AnalyticsManager.shared.logEvent("settings_selection_connect_apple_music")
                         Task {
                             await musicManager.requestAccess()
                         }
@@ -202,11 +214,13 @@ struct SettingsView: View {
             // ADVANCED
             Section(header: Text("Advanced")) {
                 Button("Reset Onboarding") {
+                    AnalyticsManager.shared.logEvent("settings_selection_reset_onboarding")
                     hasCompletedOnboarding = false
                 }
                 .foregroundColor(.red)
 
                 Button("Reset Focus List") {
+                    AnalyticsManager.shared.logEvent("settings_selection_reset_focus_list")
                     resetFocusItems()
                 }
                 .foregroundColor(.red)

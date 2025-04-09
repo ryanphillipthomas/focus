@@ -21,6 +21,7 @@ struct OnboardingFlowView: View {
             AnimalCompanionStep().tag(6)
             NotificationPermissionStep().tag(7)
             CompletionStep(onDone: {
+                AnalyticsManager.shared.logEvent("onboarding_completed")
                 hasCompletedOnboarding = true
             }).tag(8)
         }

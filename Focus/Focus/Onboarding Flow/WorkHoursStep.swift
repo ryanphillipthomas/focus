@@ -19,6 +19,7 @@ struct WorkHoursStep: View {
             DatePicker("End", selection: $endHour, displayedComponents: .hourAndMinute)
 
             Button("Next") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_next")
                 viewModel.workHours["Weekday"] = (startHour, endHour)
                 viewModel.next()
             }

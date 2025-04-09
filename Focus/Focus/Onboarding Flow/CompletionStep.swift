@@ -17,6 +17,7 @@ struct CompletionStep: View {
             Spacer()
             Button("Start Planning") {
                 // Navigate to main app
+                AnalyticsManager.shared.logEvent("onboarding_selection_start_planning")
                 onDone()
             }
             .buttonStyle(.borderedProminent)

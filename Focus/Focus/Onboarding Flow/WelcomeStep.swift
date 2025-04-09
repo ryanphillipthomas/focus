@@ -15,6 +15,7 @@ struct WelcomeStep: View {
             Text("Your AI-powered productivity sidekick").multilineTextAlignment(.center)
             Spacer()
             Button("Get Started") {
+                AnalyticsManager.shared.logEvent("onboarding_selection_get_started")
                 viewModel.next()
             }
             .buttonStyle(.borderedProminent)

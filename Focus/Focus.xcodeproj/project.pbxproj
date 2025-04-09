@@ -13,6 +13,7 @@
 		0AA367A62DA5B6AE00F2B3F8 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A52DA5B6AE00F2B3F8 /* FirebaseCrashlytics */; };
 		0AA367A82DA5B6AE00F2B3F8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A72DA5B6AE00F2B3F8 /* FirebaseFirestore */; };
 		0AA367AA2DA5B6AE00F2B3F8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A92DA5B6AE00F2B3F8 /* FirebaseMessaging */; };
+		2C227C702DA61170008953DA /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AA367AA2DA5B6AE00F2B3F8 /* FirebaseMessaging in Frameworks */,
+				2C227C702DA61170008953DA /* FirebaseInAppMessaging-Beta in Frameworks */,
 				0AA367A02DA5B6AE00F2B3F8 /* FirebaseAnalytics in Frameworks */,
 				0AA367A62DA5B6AE00F2B3F8 /* FirebaseCrashlytics in Frameworks */,
 				0AA367A42DA5B6AE00F2B3F8 /* FirebaseCore in Frameworks */,
@@ -146,6 +148,7 @@
 				0AA367A52DA5B6AE00F2B3F8 /* FirebaseCrashlytics */,
 				0AA367A72DA5B6AE00F2B3F8 /* FirebaseFirestore */,
 				0AA367A92DA5B6AE00F2B3F8 /* FirebaseMessaging */,
+				2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */,
 			);
 			productName = Focus;
 			productReference = 0A4909192DA182B9005DD72F /* Focus.app */;
@@ -680,6 +683,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0AA3679E2DA5B6AE00F2B3F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "FirebaseInAppMessaging-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
