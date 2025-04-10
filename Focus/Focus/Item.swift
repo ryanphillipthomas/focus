@@ -13,12 +13,23 @@ final class Item {
     var id: UUID
     var timestamp: Date
     var isTimerRunning: Bool
-    var secondsRemaining: Int
+    var duration: Int            // e.g., 120 seconds
+    var startDate: Date?         // when timer started
 
     init(timestamp: Date) {
         self.id = UUID()
         self.timestamp = timestamp
         self.isTimerRunning = false
-        self.secondsRemaining = 120
+        self.duration = 120
+        self.startDate = nil
+    }
+
+    var secondsRemaining: Int {
+        guard isTimerRunning, let start = startDate else {
+            return duration
+        }
+
+        let elapsed = Int(Date().timeIntervalSince(start))
+        return max(duration - elapsed, 0)
     }
 }

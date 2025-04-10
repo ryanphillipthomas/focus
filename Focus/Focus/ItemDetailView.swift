@@ -10,7 +10,7 @@ import UserNotifications
 struct ItemDetailView: View {
     @Bindable var item: Item
     @Environment(\.modelContext) private var modelContext
-    @State private var timer: Timer?
+    @State private var updateTime = Date()
 
     var body: some View {
         VStack(spacing: 20) {
@@ -24,10 +24,18 @@ struct ItemDetailView: View {
                 item.isTimerRunning ? stopTimer() : startTimer()
             }
             .buttonStyle(.borderedProminent)
+
+            // Invisible binding to force view update every second
+            Text("").hidden().id(updateTime)
         }
         .padding()
+        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { now in
+            updateTime = now
+            if item.isTimerRunning && item.secondsRemaining <= 0 {
+                stopTimer()
+            }
+        }
         .onDisappear {
-            stopTimer()
             save()
         }
         .analyticsScreen(self)
@@ -40,27 +48,19 @@ struct ItemDetailView: View {
     }
 
     func startTimer() {
-        item.secondsRemaining = 120
+        item.duration = 120
+        item.startDate = Date()
         item.isTimerRunning = true
         save()
         scheduleNotification()
-
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if item.secondsRemaining > 0 {
-                item.secondsRemaining -= 1
-                save()
-            } else {
-                stopTimer()
-            }
-        }
     }
 
     func stopTimer() {
-        timer?.invalidate()
-        timer = nil
         item.isTimerRunning = false
+        item.startDate = nil
+        item.duration = 120
         save()
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["focus_timer"])
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["focus_timer_\(item.id)"])
     }
 
     func save() {
@@ -78,8 +78,7 @@ struct ItemDetailView: View {
         content.sound = UNNotificationSound.default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 120, repeats: false)
-
-        let request = UNNotificationRequest(identifier: "focus_timer", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "focus_timer_\(item.id)", content: content, trigger: trigger)
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
