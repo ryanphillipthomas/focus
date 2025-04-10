@@ -22,4 +22,8 @@ class FirebaseAnalyticsProvider: AnalyticsProvider {
                                AnalyticsParameterScreenClass: String(describing: type(of: self))
                            ])
     }
+    
+    func setUser(id: String?) {
+        Analytics.setUserID(id)
+    }
 }

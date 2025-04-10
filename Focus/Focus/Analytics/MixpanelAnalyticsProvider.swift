@@ -27,4 +27,12 @@ class MixpanelAnalyticsProvider: AnalyticsProvider {
     func logScreenView(name: String) {
         Mixpanel.mainInstance().track(event: "Screen Viewed", properties: ["screen_name": name])
     }
+    
+    func setUser(id: String?) {
+        if let id = id {
+            Mixpanel.mainInstance().identify(distinctId: id)
+        } else {
+            Mixpanel.mainInstance().reset()
+        }
+    }
 }

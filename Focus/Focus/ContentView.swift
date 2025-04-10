@@ -1,27 +1,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var auth = AuthViewModel()
+
     var body: some View {
-        TabView {
-            MindDumpView()
-                .tabItem {
-                Label("Mind Dump", systemImage: "square.and.pencil")
-                }
-            
-            FocusListView()
-                .tabItem {
-                    Label("Focus", systemImage: "target")
-                }
-
-            AiView()
-                .tabItem {
-                    Label("Ai", systemImage: "brain")
-                }
-
-            SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape")
-                }
+        Group {
+            if auth.user != nil {
+                MainAppView(auth: auth)
+            } else {
+                AuthView(auth: auth)
+            }
         }
     }
 }

@@ -27,4 +27,8 @@ class AnalyticsManager {
     func logScreen(_ name: String) {
         providers.forEach { $0.logScreenView(name: name) }
     }
+    
+    func setUser(id: String?) {
+        providers.forEach { $0.setUser(id: id) }
+    }
 }

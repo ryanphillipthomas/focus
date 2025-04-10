@@ -18,6 +18,7 @@ struct SettingsView: View {
     @StateObject private var reminderManager = ReminderManager()
     @StateObject private var healthManager = HealthManager()
     @StateObject private var iCloudStatus = iCloudStatusManager()
+    @Bindable var auth: AuthViewModel
 
     
     @AppStorage("isProUser") private var isProUser: Bool = false
@@ -235,6 +236,14 @@ struct SettingsView: View {
                 }
                 Button("Rate This App") {
                     requestReview()
+                }
+            }
+            
+            Section {
+                Button(role: .destructive) {
+                    auth.signOut()
+                } label: {
+                    Label("Log Out", systemImage: "arrow.backward.square")
                 }
             }
         }
