@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AuthView: View {
     @Bindable var auth: AuthViewModel
-    @State private var email = ""
-    @State private var password = ""
-    @State private var isLogin = true
+    @State var email = ""
+    @State var password = ""
+    @State var isLogin = true
 
     var body: some View {
         VStack(spacing: 16) {
@@ -40,3 +40,5 @@ struct AuthView: View {
         .padding()
     }
 }
+
+

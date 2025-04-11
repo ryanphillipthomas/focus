@@ -13,6 +13,7 @@
 		0AA367A62DA5B6AE00F2B3F8 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A52DA5B6AE00F2B3F8 /* FirebaseCrashlytics */; };
 		0AA367A82DA5B6AE00F2B3F8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A72DA5B6AE00F2B3F8 /* FirebaseFirestore */; };
 		0AA367AA2DA5B6AE00F2B3F8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A92DA5B6AE00F2B3F8 /* FirebaseMessaging */; };
+		0AA368A82DA8AAE000F2B3F8 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA368A72DA8AAE000F2B3F8 /* ViewInspector */; };
 		2C227C702DA61170008953DA /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */; };
 		2C227CF02DA626D4008953DA /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 2C227CEF2DA626D4008953DA /* Mixpanel */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,11 @@
 			path = FocusUITests;
 			sourceTree = "<group>";
 		};
+		0AA368AB2DA8ABAF00F2B3F8 /* Mocks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AA368A82DA8AAE000F2B3F8 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +114,7 @@
 		0A4909102DA182B9005DD72F = {
 			isa = PBXGroup;
 			children = (
+				0AA368AB2DA8ABAF00F2B3F8 /* Mocks */,
 				0A49091B2DA182B9005DD72F /* Focus */,
 				0A49092D2DA182BC005DD72F /* FocusTests */,
 				0A4909372DA182BC005DD72F /* FocusUITests */,
@@ -141,6 +149,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0A49091B2DA182B9005DD72F /* Focus */,
+				0AA368AB2DA8ABAF00F2B3F8 /* Mocks */,
 			);
 			name = Focus;
 			packageProductDependencies = (
@@ -175,6 +184,7 @@
 			);
 			name = FocusTests;
 			packageProductDependencies = (
+				0AA368A72DA8AAE000F2B3F8 /* ViewInspector */,
 			);
 			productName = FocusTests;
 			productReference = 0A49092A2DA182BC005DD72F /* FocusTests.xctest */;
@@ -238,6 +248,7 @@
 			packageReferences = (
 				0AA3679E2DA5B6AE00F2B3F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2C227CEE2DA626D4008953DA /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
+				0AA368A62DA8AAE000F2B3F8 /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0A49091A2DA182B9005DD72F /* Products */;
@@ -655,6 +666,14 @@
 				minimumVersion = 11.11.0;
 			};
 		};
+		0AA368A62DA8AAE000F2B3F8 /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
 		2C227CEE2DA626D4008953DA /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mixpanel/mixpanel-swift";
@@ -695,6 +714,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0AA3679E2DA5B6AE00F2B3F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		0AA368A72DA8AAE000F2B3F8 /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AA368A62DA8AAE000F2B3F8 /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
 		};
 		2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
