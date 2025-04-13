@@ -12,7 +12,7 @@ import SwiftUI
 @Observable
 class AuthViewModel: ObservableObject {
     var user: User? = Auth.auth().currentUser
-    @Published var errorMessage: String?
+    var errorMessage: String?
 
     // 🔐 Store the listener handle here
     private var authStateHandle: AuthStateDidChangeListenerHandle?

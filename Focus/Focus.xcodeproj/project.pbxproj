@@ -70,11 +70,6 @@
 			path = FocusUITests;
 			sourceTree = "<group>";
 		};
-		0AA368AB2DA8ABAF00F2B3F8 /* Mocks */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Mocks;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +109,6 @@
 		0A4909102DA182B9005DD72F = {
 			isa = PBXGroup;
 			children = (
-				0AA368AB2DA8ABAF00F2B3F8 /* Mocks */,
 				0A49091B2DA182B9005DD72F /* Focus */,
 				0A49092D2DA182BC005DD72F /* FocusTests */,
 				0A4909372DA182BC005DD72F /* FocusUITests */,
@@ -149,7 +143,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0A49091B2DA182B9005DD72F /* Focus */,
-				0AA368AB2DA8ABAF00F2B3F8 /* Mocks */,
 			);
 			name = Focus;
 			packageProductDependencies = (

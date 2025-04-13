@@ -15,29 +15,56 @@ final class AuthViewTests: XCTestCase {
 
     func testInitialViewState() throws {
         let mockAuth = MockAuthViewModel()
-        let sut = AuthView(auth: mockAuth)
+        let view = AuthView(auth: mockAuth)
 
-        let emailLabel = try sut.inspect().vStack().textField(0).labelView().text().string()
+        ViewHosting.host(view: view)
+
+        // Test Email TextField label
+        let emailField = try view.inspect().find(ViewType.TextField.self)
+        let emailLabel = try emailField.labelView().text().string()
         XCTAssertEqual(emailLabel, "Email")
 
-        let passwordLabel = try sut.inspect().vStack().secureField(0).labelView().text().string()
+        // Test Password SecureField label
+        let passwordField = try view.inspect().find(ViewType.SecureField.self)
+        let passwordLabel = try passwordField.labelView().text().string()
         XCTAssertEqual(passwordLabel, "Password")
     }
 
-
     func testToggleLoginSignUpText() throws {
+        
         let mockAuth = MockAuthViewModel()
-        var sut = AuthView(auth: mockAuth)
+        let sut = AuthView(auth: mockAuth)
 
-        let toggleButton = try sut.inspect().vStack().button(1)
+        ViewHosting.host(view: sut)
+        
+        let buttons = try sut.inspect().findAll(ViewType.Button.self)
+        for (index, button) in buttons.enumerated() {
+            print("Button \(index):", try button.labelView().text().string())
+        }
+
+
+        // Safely find the toggle button by label
+        let toggleButton = try sut.inspect().find(ViewType.Button.self, where: {
+            try $0.labelView().text().string().contains("Need an account")
+        })
+
         try toggleButton.tap()
-        let updatedLabel = try sut.inspect().vStack().button(0).labelView().text().string()
+
+        // Check updated main button label
+        let updatedLabel = try sut.inspect().find(ViewType.Button.self, where: {
+            try $0.labelView().text().string() == "Sign Up"
+        }).labelView().text().string()
+
         XCTAssertEqual(updatedLabel, "Sign Up")
     }
+
+
 
     func testLoginCallsSignIn() async throws {
         let mockAuth = MockAuthViewModel()
         var sut = AuthView(auth: mockAuth)
+        
+        ViewHosting.host(view: sut)
 
         // Simulate user input for email and password fields
         let emailField = try sut.inspect().vStack().textField(0)
@@ -62,6 +89,8 @@ final class AuthViewTests: XCTestCase {
     func testSignUpCallsSignUp() async throws {
         let mockAuth = MockAuthViewModel()
         var sut = AuthView(auth: mockAuth)
+        
+        ViewHosting.host(view: sut)
 
         // Flip to Sign Up mode
         let toggleButton = try sut.inspect().vStack().button(1)
@@ -88,6 +117,8 @@ final class AuthViewTests: XCTestCase {
         let mockAuth = MockAuthViewModel()
         mockAuth.errorMessage = "Invalid credentials"
         let sut = AuthView(auth: mockAuth)
+        
+        ViewHosting.host(view: sut)
 
         let errorText = try sut.inspect().vStack().find(ViewType.Text.self, where: {
             try $0.attributes().foregroundColor() == .red

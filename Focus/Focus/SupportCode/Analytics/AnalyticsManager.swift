@@ -31,4 +31,5 @@ class AnalyticsManager {
     func setUser(id: String?) {
         providers.forEach { $0.setUser(id: id) }
     }
+
 }
