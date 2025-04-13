@@ -5,22 +5,16 @@
 //  Created by Ryan Thomas on 4/5/25.
 //
 import SwiftUI
-struct OnboardingFlowView: View {
-    @StateObject var viewModel = OnboardingViewModel()
+struct OnboardingFlow: View {
+    @StateObject var viewModel = OnboardingModel()
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
 
     var body: some View {
 #if os(iOS)
         TabView(selection: $viewModel.currentStep) {
-            WelcomeStep().tag(0)
-            ProductivityStyleStep().tag(1)
-            CalendarSyncStep().tag(2)
-            WorkHoursStep().tag(3)
-            EnergyTrackingStep().tag(4)
-            AudioPreferencesStep().tag(5)
-            AnimalCompanionStep().tag(6)
-            NotificationPermissionStep().tag(7)
-            CompletionStep(onDone: {
+            OnboardingWelcomeStep().tag(0)
+            OnboardingExampleStep().tag(1)
+            OnboardingCompletionStep(onDone: {
                 AnalyticsManager.shared.logEvent("onboarding_completed")
                 hasCompletedOnboarding = true
             }).tag(8)
@@ -35,12 +29,6 @@ struct OnboardingFlowView: View {
                 switch viewModel.currentStep {
                 case 0: WelcomeStep()
                 case 1: ProductivityStyleStep()
-                case 2: CalendarSyncStep()
-                case 3: WorkHoursStep()
-                case 4: EnergyTrackingStep()
-                case 5: AudioPreferencesStep()
-                case 6: AnimalCompanionStep()
-                case 7: NotificationPermissionStep().tag(7)
                 case 8: CompletionStep(onDone:{
                  hasCompletedOnboarding = true
                 })

@@ -6,7 +6,7 @@
 //
 import SwiftUI
 // Completion Step
-struct CompletionStep: View {
+struct OnboardingCompletionStep: View {
     let onDone: () -> Void
 
     var body: some View {

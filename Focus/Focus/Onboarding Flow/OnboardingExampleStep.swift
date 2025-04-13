@@ -5,8 +5,8 @@
 //  Created by Ryan Thomas on 4/5/25.
 //
 import SwiftUI
-struct ProductivityStyleStep: View {
-    @EnvironmentObject var viewModel: OnboardingViewModel
+struct OnboardingExampleStep: View {
+    @EnvironmentObject var viewModel: OnboardingModel
     @State private var selectedStyles: Set<String> = []
 
     let styles = ["Flow-focused", "Task-oriented", "Flexible"]

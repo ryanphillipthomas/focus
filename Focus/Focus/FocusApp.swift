@@ -52,7 +52,7 @@ struct FocusApp: App {
                     }
                     .environmentObject(Model()) // 👈 This is the fix
             } else {
-                OnboardingFlowView()
+                OnboardingFlow()
                     .onAppear {
                         _ = FirebaseManager.shared // ✅ Trigger setup once
                     }

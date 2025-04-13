@@ -5,8 +5,8 @@
 //  Created by Ryan Thomas on 4/5/25.
 //
 import SwiftUI
-struct WelcomeStep: View {
-    @EnvironmentObject var viewModel: OnboardingViewModel
+struct OnboardingWelcomeStep: View {
+    @EnvironmentObject var viewModel: OnboardingModel
 
     var body: some View {
         VStack(spacing: 20) {
