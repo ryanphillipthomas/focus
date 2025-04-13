@@ -25,10 +25,10 @@ enum Icon: String, CaseIterable, Identifiable {
     var id: String { self.rawValue }
 }
 
-class Model: ObservableObject, Equatable {
+class ThemeModel: ObservableObject, Equatable {
     @Published var appIcon: Icon = .primary
 
-    static func == (lhs: Model, rhs: Model) -> Bool {
+    static func == (lhs: ThemeModel, rhs: ThemeModel) -> Bool {
         return lhs.appIcon == rhs.appIcon
     }
 

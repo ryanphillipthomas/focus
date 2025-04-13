@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct AccentColorSelector: View {
+struct AccentColorSelectorView: View {
     @AppStorage("accentColorName") var accentColorName: String = AccentColorOption.orange.rawValue
     @AppStorage("customAccentColorHex") var customAccentColorHex: String = "#FF6F61"
 

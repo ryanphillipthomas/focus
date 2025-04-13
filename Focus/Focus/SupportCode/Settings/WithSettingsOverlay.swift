@@ -8,7 +8,7 @@ import SwiftUI
 
 struct WithSettingsOverlay<Content: View>: View {
     @State private var showSettings = false
-    @EnvironmentObject var model: Model
+    @EnvironmentObject var model: ThemeModel
     @State var auth = AuthViewModel() // Or inject if you already have one
 
     let content: Content
@@ -20,7 +20,7 @@ struct WithSettingsOverlay<Content: View>: View {
     var body: some View {
         ZStack {
             content
-            FloatingSettingsButton(showSettings: $showSettings)
+            SettingsButtonView(showSettings: $showSettings)
         }
         .sheet(isPresented: $showSettings) {
             SettingsModalView(auth: auth)

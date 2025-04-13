@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct SettingsModalView: View {
-    @EnvironmentObject var model: Model
+    @EnvironmentObject var model: ThemeModel
     @Bindable var auth: AuthViewModel
 
     var body: some View {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FloatingSettingsButton: View {
+struct SettingsButtonView: View {
     @Binding var showSettings: Bool
     @AppStorage("selectedAccentColor") private var selectedAccentColor: String = AccentColorOption.orange.rawValue
     @AppStorage("floatingButtonX") private var savedX: Double = 150

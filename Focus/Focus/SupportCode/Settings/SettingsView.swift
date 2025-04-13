@@ -10,7 +10,7 @@ import StoreKit
 
 
 struct SettingsView: View {
-    @EnvironmentObject var model: Model
+    @EnvironmentObject var model: ThemeModel
 
     @StateObject private var calendarManager = CalendarManager()
     @StateObject private var calendarViewModel = CalendarListViewModel()
@@ -266,7 +266,7 @@ struct SettingsView: View {
                 }
             case .appearancePicker:
                 NavigationView {
-                    CustomizationView()
+                    ThemeSelectionView()
                 }
             case .notificationsPicker:
                 NavigationView {

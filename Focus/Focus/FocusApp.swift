@@ -50,7 +50,7 @@ struct FocusApp: App {
                     .onAppear {
                         _ = FirebaseManager.shared // ✅ Trigger setup once
                     }
-                    .environmentObject(Model()) // 👈 This is the fix
+                    .environmentObject(ThemeModel()) // 👈 This is the fix
             } else {
                 OnboardingFlow()
                     .onAppear {

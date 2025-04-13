@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct AppIconTile: View {
+struct AppIconTileView: View {
     let icon: AppIcon
     let isSelected: Bool
     let selectedColor: Color

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CustomizationView: View {
+struct ThemeSelectionView: View {
     @AppStorage("accentColorName") var accentColorName: String = AccentColorOption.orange.rawValue
     @AppStorage("customAccentColorHex") var customAccentColorHex: String = "#FF6F61"
 
@@ -20,14 +20,14 @@ struct CustomizationView: View {
         Form {
             // Accent Color Picker
             Section(header: Text("Accent Color")) {
-                AccentColorSelector()
+                AccentColorSelectorView()
             }
 
             // App Icon Picker
             Section(header: Text("App Icon")) {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)]) {
                     ForEach(AppIcon.allCases, id: \.self) { icon in
-                        AppIconTile(icon: icon,
+                        AppIconTileView(icon: icon,
                                     isSelected: currentAppIcon == icon,
                                     selectedColor: selectedAccentColor) {
                             changeAppIcon(to: icon)
