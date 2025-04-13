@@ -57,7 +57,7 @@ class Model: ObservableObject, Equatable {
         if iconName == nil {
             appIcon = .primary
         } else {
-            appIcon = Icon(rawValue: iconName!)!
+            appIcon = Icon(rawValue: iconName ?? "") ?? .primary
         }
     }
 }

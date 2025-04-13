@@ -29,6 +29,7 @@ struct SettingsView: View {
     @State private var showCalendarPicker = false
     
     @Environment(\.modelContext) private var modelContext
+    
     @Query private var focusItems: [Item] // Replace with your model name
 
     var body: some View {
