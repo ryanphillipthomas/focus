@@ -10,9 +10,9 @@ import FirebaseAuth
 import SwiftUI
 
 @Observable
-class AuthViewModel {
+class AuthViewModel: ObservableObject {
     var user: User? = Auth.auth().currentUser
-    var errorMessage: String?
+    @Published var errorMessage: String?
 
     // 🔐 Store the listener handle here
     private var authStateHandle: AuthStateDidChangeListenerHandle?
