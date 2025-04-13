@@ -7,7 +7,7 @@
 import SwiftUI
 class OnboardingModel: ObservableObject {
     @Published var currentStep: Int = 0
-    @Published var numberOfSteps: Int = 3
+    @Published var numberOfSteps: Int = 2
 
     // Data to persist throughout onboarding
     @Published var productivityStyle: [String] = []

@@ -17,7 +17,7 @@ struct OnboardingFlow: View {
             OnboardingCompletionStep(onDone: {
                 AnalyticsManager.shared.logEvent("onboarding_completed")
                 hasCompletedOnboarding = true
-            }).tag(8)
+            }).tag(2)
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .animation(.easeInOut, value: viewModel.currentStep)
