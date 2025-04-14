@@ -104,35 +104,14 @@ struct SettingsView: View {
             
             // HEALTH
             Section(header: Text("Health")) {
-                if healthManager.isAuthorized {
-                    HStack {
-                        Label("Steps Today", systemImage: "figure.walk")
-                        Spacer()
-                        Text("\(Int(healthManager.stepCountToday))")
-                    }
-
-                    HStack {
-                        Label("Sleep Last Night", systemImage: "bed.double.fill")
-                        Spacer()
-                        Text(String(format: "%.1f hrs", healthManager.sleepHoursLastNight))
-                    }
-
-                    Button("Refresh Health Data") {
-                        Task {
-                            AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
-                            await healthManager.fetchHealthData()
-                        }
-                    }
-                } else {
-                    Button("Connect Apple Health") {
-                        Task {
-                            AnalyticsManager.shared.logEvent("settings_selection_connect_health")
-                            await healthManager.requestAuthorization()
-                        }
-                    }
-                }
+                NavigationLink(destination: HealthStatsListView()) {
+                    Label("Health", systemImage: "heart")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
+                })
             }
             // HEALTH
+            
             
             // ICLOUD
             Section(header: Text("iCloud")) {
@@ -186,11 +165,12 @@ struct SettingsView: View {
             Section(header: Text("Notifications")) {
                 NavigationLink(destination: NotificationTestView()) {
                     Label("Notifications", systemImage: "bell")
-                }
-
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
+                })
             }
-
             // NOTIFICATIONS
+            
             
             // ONBOARDING
             Section(header: Text("Onboarding")) {
@@ -249,15 +229,16 @@ struct SettingsView: View {
             }
             // SUBSCRIPTIONS
             
+            
             // THEME
             Section(header: Text("Theme")) {
-                Button("Customize") {
+                NavigationLink(destination: ThemeSelectionView()) {
+                    Label("Theme", systemImage: "paintpalette")
+                }.simultaneousGesture(TapGesture().onEnded {
                     AnalyticsManager.shared.logEvent("settings_selection_customize")
-                    activeSheet = .appearancePicker
-                }
+                })
             }
-
-            // CUSTOMIZATION
+            // THEME
 
 
             // ADVANCED

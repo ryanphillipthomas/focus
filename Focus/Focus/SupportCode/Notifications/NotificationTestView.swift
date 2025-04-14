@@ -10,8 +10,6 @@ import UserNotifications
 
 
 struct NotificationTestView: View {
-    @Environment(\.dismiss) private var dismiss // lets you close the sheet
-
     var body: some View {
         List {
             Spacer()
