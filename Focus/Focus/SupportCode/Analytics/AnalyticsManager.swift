@@ -12,7 +12,7 @@ class AnalyticsManager {
     private var providers: [AnalyticsProvider] = []
 
     private init() {
-        // Add your providers here
+        // ✅ Add Firebase with your token
         providers.append(FirebaseAnalyticsProvider())
 
         // ✅ Add Mixpanel with your token

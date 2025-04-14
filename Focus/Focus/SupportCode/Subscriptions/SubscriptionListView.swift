@@ -51,7 +51,7 @@ struct SubscriptionListView: View {
                 .foregroundColor(.red)
             }
         }
-        .navigationTitle("Focx Pro")
+        .navigationTitle("Manage Subscription")
         .analyticsScreen(self)
         .task {
             if viewModel.products.isEmpty {

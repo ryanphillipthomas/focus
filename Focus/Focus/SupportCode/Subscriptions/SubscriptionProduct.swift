@@ -26,8 +26,8 @@ struct MockSubscriptionProduct: SubscriptionProduct {
     let price: String
 
     static let sampleProducts: [MockSubscriptionProduct] = [
-        .init(productID: "com.focusapp.pro.monthly.test", name: "Focx Pro (Monthly)", price: "$4.99"),
-        .init(productID: "com.focusapp.pro.yearly.test", name: "Focx Pro (Yearly)", price: "$39.99")
+        .init(productID: "com.focusapp.pro.monthly.test", name: "Paid Plan (Monthly)", price: "$4.99"),
+        .init(productID: "com.focusapp.pro.yearly.test", name: "Paid Plan (Yearly)", price: "$39.99")
     ]
 }
 

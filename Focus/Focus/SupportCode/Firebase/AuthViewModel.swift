@@ -80,4 +80,17 @@ class AuthViewModel: ObservableObject {
             ])
         }
     }
+    
+    func resetPassword(email: String) async {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            errorMessage = nil
+            AnalyticsManager.shared.logEvent("Send Password Reset")
+        } catch {
+            self.errorMessage = error.localizedDescription
+            AnalyticsManager.shared.logEvent("Send Password Reset Failed", parameters: [
+                "error": error.localizedDescription
+            ])
+        }
+    }
 }

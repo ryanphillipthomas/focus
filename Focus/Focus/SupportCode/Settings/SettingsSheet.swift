@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum SettingsSheet: Identifiable {
+    case authencation
     case subscription
     case calendarPicker
     case appearancePicker
@@ -15,6 +16,7 @@ enum SettingsSheet: Identifiable {
 
     var id: String {
         switch self {
+        case .authencation: return "authencation"
         case .subscription: return "subscription"
         case .calendarPicker: return "calendar"
         case .appearancePicker: return "appearance"

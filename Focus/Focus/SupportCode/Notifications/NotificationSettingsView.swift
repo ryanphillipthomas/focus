@@ -35,6 +35,5 @@ struct NotificationSettingsView: View {
             }
         }
         .analyticsScreen(self)
-        .navigationTitle("Notifications")
     }
 }

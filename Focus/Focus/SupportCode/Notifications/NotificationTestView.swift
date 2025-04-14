@@ -13,31 +13,28 @@ struct NotificationTestView: View {
     @Environment(\.dismiss) private var dismiss // lets you close the sheet
 
     var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    Button("Request Permission") {
-                        FirebaseManager.shared.requestNotificationPermissions()
-                    }
+        List {
+            Spacer()
+            Section(header: Text("Setup Notifications")) {
+                Button("Request Permission") {
+                    FirebaseManager.shared.requestNotificationPermissions()
                 }
+            }
 
-                Section(header: Text("Test Notifications")) {
-                    ForEach(UserNotificationPreferences.defaultPreferences.preferences, id: \.id) { type in
-                        Button("Send: \(type.title)") {
-                            scheduleTestNotification(type: type)
-                        }
+            Section(header: Text("Test Notifications")) {
+                ForEach(UserNotificationPreferences.defaultPreferences.preferences, id: \.id) { type in
+                    Button("Send: \(type.title)") {
+                        scheduleTestNotification(type: type)
                     }
                 }
             }
-            .navigationTitle("Notification Tester")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") {
-                        dismiss()
-                    }
+            
+            Section(header: Text("Test All Notifications")) {
+                Button("Test All Notifications") {
+                    scheduleAllTestNotifications()
                 }
             }
-        }
+        }.navigationTitle("Notifications")
     }
 }
 

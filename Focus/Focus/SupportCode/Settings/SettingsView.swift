@@ -36,7 +36,21 @@ struct SettingsView: View {
         Form {
             // ANALYTICS
             Section(header: Text("Analytics")) {
-
+                VStack {
+                    Spacer()
+                    HStack{
+                        Text("Firebase Analytics")
+                        Spacer()
+                        Text("Enabled")
+                    }
+                    Spacer()
+                    HStack{
+                        Text("Mixpanel Analytics")
+                        Spacer()
+                        Text("Enabled")
+                    }
+                    Spacer()
+                }
             }
             // ANALYTICS
             
@@ -46,7 +60,6 @@ struct SettingsView: View {
                     AnalyticsManager.shared.logEvent("settings_selection_choose_calendar")
                     activeSheet = .calendarPicker
                 }
-                
                 HStack {
                     Text("Selected Calendar")
                     Spacer()
@@ -74,6 +87,12 @@ struct SettingsView: View {
             // FIREBASE
             Section(header: Text("Firebase")) {
                 Section {
+                    Button() {
+                        activeSheet = .authencation
+                    } label: {
+                        Label("Log In", systemImage: "arrow.forward.square")
+                    }
+                    
                     Button(role: .destructive) {
                         auth.signOut()
                     } label: {
@@ -165,10 +184,10 @@ struct SettingsView: View {
             
             // NOTIFICATIONS
             Section(header: Text("Notifications")) {
-                Button("Manage Notification Settings") {
-                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
-                    activeSheet = .notificationsPicker
+                NavigationLink(destination: NotificationTestView()) {
+                    Label("Notifications", systemImage: "bell")
                 }
+
             }
 
             // NOTIFICATIONS
@@ -219,11 +238,11 @@ struct SettingsView: View {
                 HStack {
                     Label("Status", systemImage: isProUser ? "checkmark.seal.fill" : "xmark.seal")
                     Spacer()
-                    Text(isProUser ? "Focx Pro" : "Free")
+                    Text(isProUser ? "Paid" : "Free")
                         .foregroundColor(isProUser ? .green : .secondary)
                 }
 
-                Button("Upgrade to Pro 🚀") {
+                Button("Manage Subscription") {
                     AnalyticsManager.shared.logEvent("settings_selection_upgrade_to_pro")
                     activeSheet = .subscription
                 }
@@ -286,6 +305,10 @@ struct SettingsView: View {
             case .notificationsPicker:
                 NavigationView {
                     NotificationTestView()
+                }
+            case .authencation:
+                NavigationView {
+                    AuthView(auth: auth)
                 }
             }
         }

@@ -4,9 +4,9 @@ struct ContentView: View {
     @State var auth = AuthViewModel()
 
     var body: some View {
-        Group {
+        WithSettingsOverlay{
             if auth.user != nil {
-                MainAppView(auth: auth)
+                FocusListView()
             } else {
                 AuthView(auth: auth)
             }
