@@ -13,6 +13,15 @@ struct SubscriptionListView: View {
                     Spacer()
                 }
             } else {
+                Section(header: Text("Status")) {
+                    HStack {
+                        Label("Status", systemImage: viewModel.isProUser ? "checkmark.seal.fill" : "xmark.seal")
+                        Spacer()
+                        Text(viewModel.isProUser ? "Paid" : "Free")
+                            .foregroundColor(viewModel.isProUser ? .green : .secondary)
+                    }
+                }
+                
                 Section(header: Text("Choose Your Plan")) {
                     ForEach(viewModel.products) { item in
                         let product = item.product
@@ -42,13 +51,6 @@ struct SubscriptionListView: View {
                         await viewModel.restorePurchases()
                     }
                 }
-            }
-
-            Section {
-                Button("Close") {
-                    dismiss()
-                }
-                .foregroundColor(.red)
             }
         }
         .navigationTitle("Manage Subscription")

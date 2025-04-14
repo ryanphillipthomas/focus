@@ -1,0 +1,31 @@
+//
+//  iCloudListView.swift
+//  Focus
+//
+//  Created by Ryan Thomas on 4/14/25.
+//
+
+
+import SwiftUI
+
+struct iCloudListView: View {
+    @ObservedObject var iCloudStatus: iCloudStatusManager
+
+    var body: some View {
+        List {
+            Section(header: Text("iCloud")) {
+                HStack {
+                    Label("iCloud Sync", systemImage: "icloud")
+                    Spacer()
+                    Text(iCloudStatus.iCloudAvailable ? "Active ✅" : "Unavailable ❌")
+                        .foregroundColor(iCloudStatus.iCloudAvailable ? .green : .secondary)
+                }
+
+                Button("Refresh iCloud Status") {
+                    AnalyticsManager.shared.logEvent("settings_selection_refresh_icloud")
+                    iCloudStatus.checkiCloudStatus()
+                }
+            }
+        }
+    }
+}
