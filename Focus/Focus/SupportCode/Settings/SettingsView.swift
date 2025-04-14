@@ -33,7 +33,7 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            
+                        
             // ANALYTICS
             Section(header: Text("Analytics")) {
                 NavigationLink(destination: AnalyticsSettingsListView()) {
