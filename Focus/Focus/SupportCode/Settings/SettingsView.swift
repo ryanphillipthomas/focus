@@ -34,21 +34,54 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            // PRO
-            Section(header: Text("Account")) {
-                HStack {
-                    Label("Status", systemImage: isProUser ? "checkmark.seal.fill" : "xmark.seal")
-                    Spacer()
-                    Text(isProUser ? "Focx Pro" : "Free")
-                        .foregroundColor(isProUser ? .green : .secondary)
-                }
+            // ANALYTICS
+            Section(header: Text("Analytics")) {
 
-                Button("Upgrade to Pro 🚀") {
-                    AnalyticsManager.shared.logEvent("settings_selection_upgrade_to_pro")
-                    activeSheet = .subscription
+            }
+            // ANALYTICS
+            
+            // CALENDAR
+            Section(header: Text("Calendar")) {
+                Button("Choose Calendar") {
+                    AnalyticsManager.shared.logEvent("settings_selection_choose_calendar")
+                    activeSheet = .calendarPicker
+                }
+                
+                HStack {
+                    Text("Selected Calendar")
+                    Spacer()
+                    Text(calendarViewModel.selectedCalendarTitle())
+                        .foregroundColor(.secondary)
+                }
+                if calendarManager.isAuthorized {
+                    Label("Connected to Calendar", systemImage: "checkmark.circle")
+                        .foregroundColor(.green)
+                } else {
+                    Button("Enable Calendar Access") {
+                        AnalyticsManager.shared.logEvent("settings_selection_enable_calendar")
+                        calendarManager.requestAccess { granted in
+                            if granted {
+                                print("✅ Calendar access granted by user.")
+                            } else {
+                                print("❌ Calendar access denied by user.")
+                            }
+                        }
+                    }
                 }
             }
-            // PRO
+            // CALENDAR
+            
+            // FIREBASE
+            Section(header: Text("Firebase")) {
+                Section {
+                    Button(role: .destructive) {
+                        auth.signOut()
+                    } label: {
+                        Label("Log Out", systemImage: "arrow.backward.square")
+                    }
+                }
+            }
+            // FIREBASE
             
             // HEALTH
             Section(header: Text("Health")) {
@@ -82,16 +115,6 @@ struct SettingsView: View {
             }
             // HEALTH
             
-            // CUSTOMIZATION
-            Section(header: Text("Appearance")) {
-                Button("Customize") {
-                    AnalyticsManager.shared.logEvent("settings_selection_customize")
-                    activeSheet = .appearancePicker
-                }
-            }
-
-            // CUSTOMIZATION
-            
             // ICLOUD
             Section(header: Text("iCloud")) {
                 HStack {
@@ -109,79 +132,6 @@ struct SettingsView: View {
 
             // ICLOUD
             
-            // NOTIFICATIONS
-            Section(header: Text("Notifications")) {
-                Button("Manage Notification Settings") {
-                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
-                    activeSheet = .notificationsPicker
-                }
-            }
-
-            // NOTIFICATIONS
-            
-            // CALENDAR
-            Section(header: Text("Calendar")) {
-                Button("Choose Calendar") {
-                    AnalyticsManager.shared.logEvent("settings_selection_choose_calendar")
-                    activeSheet = .calendarPicker
-                }
-                
-                HStack {
-                    Text("Selected Calendar")
-                    Spacer()
-                    Text(calendarViewModel.selectedCalendarTitle())
-                        .foregroundColor(.secondary)
-                }
-                if calendarManager.isAuthorized {
-                    Label("Connected to Calendar", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
-                } else {
-                    Button("Enable Calendar Access") {
-                        AnalyticsManager.shared.logEvent("settings_selection_enable_calendar")
-                        calendarManager.requestAccess { granted in
-                            if granted {
-                                print("✅ Calendar access granted by user.")
-                            } else {
-                                print("❌ Calendar access denied by user.")
-                            }
-                        }
-                    }
-                }
-            }
-            // CALENDAR
-
-            // REMINDERS
-            Section(header: Text("Reminders")) {
-                if reminderManager.isAuthorized {
-                    Label("Connected to Reminders", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
-
-                    ForEach(reminderManager.reminders.prefix(5), id: \.calendarItemIdentifier) { reminder in
-                        Text(reminder.title)
-                    }
-
-                    Button("Fetch Reminders") {
-                        AnalyticsManager.shared.logEvent("settings_selection_fetch_reminders")
-                        reminderManager.fetchReminders()
-                    }
-
-                    Button("Add Test Reminder") {
-                        AnalyticsManager.shared.logEvent("settings_selection_add_test_reminder")
-                        reminderManager.addReminder(title: "Test Reminder", dueDate: Date().addingTimeInterval(3600))
-                    }
-
-                } else {
-                    Button("Enable Reminder Access") {
-                        AnalyticsManager.shared.logEvent("settings_selection_enable_reminders")
-                        reminderManager.requestAccess { granted in
-                            print(granted ? "✅ Reminder access granted" : "❌ Reminder access denied")
-                        }
-                    }
-                }
-            }
-
-            // REMINDERS
-
             // MUSIC
             Section(header: Text("Music")) {
                 if musicManager.isAuthorized {
@@ -212,14 +162,87 @@ struct SettingsView: View {
                 }
             }
             // MUSIC
+            
+            // NOTIFICATIONS
+            Section(header: Text("Notifications")) {
+                Button("Manage Notification Settings") {
+                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
+                    activeSheet = .notificationsPicker
+                }
+            }
 
-            // ADVANCED
-            Section(header: Text("Advanced")) {
+            // NOTIFICATIONS
+            
+            // ONBOARDING
+            Section(header: Text("Onboarding")) {
                 Button("Reset Onboarding") {
                     AnalyticsManager.shared.logEvent("settings_selection_reset_onboarding")
                     hasCompletedOnboarding = false
                 }
                 .foregroundColor(.red)
+            }
+            // ONBOARDING
+            
+            // REMINDERS
+            Section(header: Text("Reminders")) {
+                if reminderManager.isAuthorized {
+                    Label("Connected to Reminders", systemImage: "checkmark.circle")
+                        .foregroundColor(.green)
+
+                    ForEach(reminderManager.reminders.prefix(5), id: \.calendarItemIdentifier) { reminder in
+                        Text(reminder.title)
+                    }
+
+                    Button("Fetch Reminders") {
+                        AnalyticsManager.shared.logEvent("settings_selection_fetch_reminders")
+                        reminderManager.fetchReminders()
+                    }
+
+                    Button("Add Test Reminder") {
+                        AnalyticsManager.shared.logEvent("settings_selection_add_test_reminder")
+                        reminderManager.addReminder(title: "Test Reminder", dueDate: Date().addingTimeInterval(3600))
+                    }
+
+                } else {
+                    Button("Enable Reminder Access") {
+                        AnalyticsManager.shared.logEvent("settings_selection_enable_reminders")
+                        reminderManager.requestAccess { granted in
+                            print(granted ? "✅ Reminder access granted" : "❌ Reminder access denied")
+                        }
+                    }
+                }
+            }
+            // REMINDERS
+            
+            // SUBSCRIPTIONS
+            Section(header: Text("Subscriptions")) {
+                HStack {
+                    Label("Status", systemImage: isProUser ? "checkmark.seal.fill" : "xmark.seal")
+                    Spacer()
+                    Text(isProUser ? "Focx Pro" : "Free")
+                        .foregroundColor(isProUser ? .green : .secondary)
+                }
+
+                Button("Upgrade to Pro 🚀") {
+                    AnalyticsManager.shared.logEvent("settings_selection_upgrade_to_pro")
+                    activeSheet = .subscription
+                }
+            }
+            // SUBSCRIPTIONS
+            
+            // THEME
+            Section(header: Text("Theme")) {
+                Button("Customize") {
+                    AnalyticsManager.shared.logEvent("settings_selection_customize")
+                    activeSheet = .appearancePicker
+                }
+            }
+
+            // CUSTOMIZATION
+
+
+            // ADVANCED
+            Section(header: Text("Advanced")) {
 
                 Button("Reset Focus List") {
                     AnalyticsManager.shared.logEvent("settings_selection_reset_focus_list")
@@ -239,19 +262,11 @@ struct SettingsView: View {
                     requestReview()
                 }
             }
-            
-            Section {
-                Button(role: .destructive) {
-                    auth.signOut()
-                } label: {
-                    Label("Log Out", systemImage: "arrow.backward.square")
-                }
-            }
         }
         // ADVANCED
 
         // ROOT
-        .navigationTitle("Settings")
+        .navigationTitle("Support Code")
         .analyticsScreen(self)
         
         .sheet(item: $activeSheet) { sheet in

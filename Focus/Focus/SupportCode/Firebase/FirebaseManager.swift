@@ -34,8 +34,6 @@ final class FirebaseManager: NSObject, ObservableObject {
 
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
-
-//        requestNotificationPermissions()
     }
 
     func requestNotificationPermissions() {
