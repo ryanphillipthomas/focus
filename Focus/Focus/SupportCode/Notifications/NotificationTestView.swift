@@ -14,7 +14,6 @@ struct NotificationTestView: View {
 
     var body: some View {
         List {
-            Spacer()
             Section(header: Text("Setup Notifications")) {
                 Button("Request Permission") {
                     FirebaseManager.shared.requestNotificationPermissions()
