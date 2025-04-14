@@ -21,7 +21,6 @@ struct SettingsView: View {
     @Bindable var auth: AuthViewModel
 
     
-    @AppStorage("isProUser") private var isProUser: Bool = false
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
         
     @State private var activeSheet: SettingsSheet?
@@ -34,151 +33,65 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            
             // ANALYTICS
             Section(header: Text("Analytics")) {
-                VStack {
-                    Spacer()
-                    HStack{
-                        Text("Firebase Analytics")
-                        Spacer()
-                        Text("Enabled")
-                    }
-                    Spacer()
-                    HStack{
-                        Text("Mixpanel Analytics")
-                        Spacer()
-                        Text("Enabled")
-                    }
-                    Spacer()
-                }
+                NavigationLink(destination: AnalyticsSettingsListView()) {
+                    Label("Analytics", systemImage: "gear")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_analytics")
+                })
             }
             // ANALYTICS
             
             // CALENDAR
             Section(header: Text("Calendar")) {
-                Button("Choose Calendar") {
-                    AnalyticsManager.shared.logEvent("settings_selection_choose_calendar")
-                    activeSheet = .calendarPicker
-                }
-                HStack {
-                    Text("Selected Calendar")
-                    Spacer()
-                    Text(calendarViewModel.selectedCalendarTitle())
-                        .foregroundColor(.secondary)
-                }
-                if calendarManager.isAuthorized {
-                    Label("Connected to Calendar", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
-                } else {
-                    Button("Enable Calendar Access") {
-                        AnalyticsManager.shared.logEvent("settings_selection_enable_calendar")
-                        calendarManager.requestAccess { granted in
-                            if granted {
-                                print("✅ Calendar access granted by user.")
-                            } else {
-                                print("❌ Calendar access denied by user.")
-                            }
-                        }
-                    }
-                }
+                NavigationLink(destination: CalendarSettingsListView(calendarManager: calendarManager, calendarViewModel: calendarViewModel)) {
+                    Label("Calendar", systemImage: "calendar")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_authentication")
+                })
             }
             // CALENDAR
             
-            // FIREBASE
-            Section(header: Text("Firebase")) {
-                Section {
-                    Button() {
-                        activeSheet = .authencation
-                    } label: {
-                        Label("Log In", systemImage: "arrow.forward.square")
-                    }
-                    
-                    Button(role: .destructive) {
-                        auth.signOut()
-                    } label: {
-                        Label("Log Out", systemImage: "arrow.backward.square")
-                    }
-                }
+            // AUTHENTICATION
+            Section(header: Text("Authentication")) {
+                NavigationLink(destination: AuthenticationListView(auth: auth)) {
+                    Label("Authentication", systemImage: "lock")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_authentication")
+                })
             }
-            // FIREBASE
+            // AUTHENTICATION
             
             // HEALTH
             Section(header: Text("Health")) {
-                if healthManager.isAuthorized {
-                    HStack {
-                        Label("Steps Today", systemImage: "figure.walk")
-                        Spacer()
-                        Text("\(Int(healthManager.stepCountToday))")
-                    }
-
-                    HStack {
-                        Label("Sleep Last Night", systemImage: "bed.double.fill")
-                        Spacer()
-                        Text(String(format: "%.1f hrs", healthManager.sleepHoursLastNight))
-                    }
-
-                    Button("Refresh Health Data") {
-                        Task {
-                            AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
-                            await healthManager.fetchHealthData()
-                        }
-                    }
-                } else {
-                    Button("Connect Apple Health") {
-                        Task {
-                            AnalyticsManager.shared.logEvent("settings_selection_connect_health")
-                            await healthManager.requestAuthorization()
-                        }
-                    }
-                }
+                NavigationLink(destination: HealthStatsListView()) {
+                    Label("Health", systemImage: "heart")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
+                })
             }
             // HEALTH
             
+            
             // ICLOUD
             Section(header: Text("iCloud")) {
-                HStack {
-                    Label("iCloud Sync", systemImage: "icloud")
-                    Spacer()
-                    Text(iCloudStatus.iCloudAvailable ? "Active ✅" : "Unavailable ❌")
-                        .foregroundColor(iCloudStatus.iCloudAvailable ? .green : .secondary)
-                }
-
-                Button("Refresh iCloud Status") {
+                NavigationLink(destination: MusicListView(musicManager: musicManager)) {
+                    Label("iCloud", systemImage: "icloud")
+                }.simultaneousGesture(TapGesture().onEnded {
                     AnalyticsManager.shared.logEvent("settings_selection_refresh_icloud")
-                    iCloudStatus.checkiCloudStatus()
-                }
+                })
             }
-
             // ICLOUD
             
             // MUSIC
             Section(header: Text("Music")) {
-                if musicManager.isAuthorized {
-                    Button("Play Sample Song") {
-                        AnalyticsManager.shared.logEvent("settings_selection_play_song")
-                        Task {
-                            await musicManager.requestAccess() // ensures auth
-                            await musicManager.playSampleSong() //play song
-                        }
-                    }
-                    .disabled(!musicManager.isAuthorized || !musicManager.isSubscribed)
-                    
-                    Label("Connected to Apple Music", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
-                } else {
-                    Button("Connect Apple Music") {
-                        AnalyticsManager.shared.logEvent("settings_selection_connect_apple_music")
-                        Task {
-                            await musicManager.requestAccess()
-                        }
-                    }
-                }
-
-                if !musicManager.statusMessage.isEmpty {
-                    Text(musicManager.statusMessage)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                }
+                NavigationLink(destination: MusicListView(musicManager: musicManager)) {
+                    Label("Music", systemImage: "music.quarternote.3")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_connect_apple_music")
+                })
             }
             // MUSIC
             
@@ -186,78 +99,54 @@ struct SettingsView: View {
             Section(header: Text("Notifications")) {
                 NavigationLink(destination: NotificationTestView()) {
                     Label("Notifications", systemImage: "bell")
-                }
-
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
+                })
             }
-
             // NOTIFICATIONS
+            
             
             // ONBOARDING
             Section(header: Text("Onboarding")) {
-                Button("Reset Onboarding") {
-                    AnalyticsManager.shared.logEvent("settings_selection_reset_onboarding")
-                    hasCompletedOnboarding = false
-                }
-                .foregroundColor(.red)
+                NavigationLink(destination: OnboardingListView(hasCompletedOnboarding: $hasCompletedOnboarding)) {
+                    Label("Onboarding", systemImage: "chart.line.text.clipboard")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_onboarding")
+                })
             }
             // ONBOARDING
             
+            
             // REMINDERS
             Section(header: Text("Reminders")) {
-                if reminderManager.isAuthorized {
-                    Label("Connected to Reminders", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
-
-                    ForEach(reminderManager.reminders.prefix(5), id: \.calendarItemIdentifier) { reminder in
-                        Text(reminder.title)
-                    }
-
-                    Button("Fetch Reminders") {
-                        AnalyticsManager.shared.logEvent("settings_selection_fetch_reminders")
-                        reminderManager.fetchReminders()
-                    }
-
-                    Button("Add Test Reminder") {
-                        AnalyticsManager.shared.logEvent("settings_selection_add_test_reminder")
-                        reminderManager.addReminder(title: "Test Reminder", dueDate: Date().addingTimeInterval(3600))
-                    }
-
-                } else {
-                    Button("Enable Reminder Access") {
-                        AnalyticsManager.shared.logEvent("settings_selection_enable_reminders")
-                        reminderManager.requestAccess { granted in
-                            print(granted ? "✅ Reminder access granted" : "❌ Reminder access denied")
-                        }
-                    }
-                }
+                NavigationLink(destination: RemindersListView(reminderManager:reminderManager)) {
+                    Label("Reminders", systemImage: "checklist")
+                }.simultaneousGesture(TapGesture().onEnded {
+                    AnalyticsManager.shared.logEvent("settings_selection_reminders")
+                })
             }
             // REMINDERS
             
             // SUBSCRIPTIONS
             Section(header: Text("Subscriptions")) {
-                HStack {
-                    Label("Status", systemImage: isProUser ? "checkmark.seal.fill" : "xmark.seal")
-                    Spacer()
-                    Text(isProUser ? "Paid" : "Free")
-                        .foregroundColor(isProUser ? .green : .secondary)
-                }
-
-                Button("Manage Subscription") {
+                NavigationLink(destination: SubscriptionListView(viewModel: SubscriptionViewModel(mock: true))) {
+                    Label("Subscriptions", systemImage: "dollarsign.arrow.trianglehead.counterclockwise.rotate.90")
+                }.simultaneousGesture(TapGesture().onEnded {
                     AnalyticsManager.shared.logEvent("settings_selection_upgrade_to_pro")
-                    activeSheet = .subscription
-                }
+                })
             }
             // SUBSCRIPTIONS
             
+            
             // THEME
             Section(header: Text("Theme")) {
-                Button("Customize") {
+                NavigationLink(destination: ThemeSelectionView()) {
+                    Label("Theme", systemImage: "paintpalette")
+                }.simultaneousGesture(TapGesture().onEnded {
                     AnalyticsManager.shared.logEvent("settings_selection_customize")
-                    activeSheet = .appearancePicker
-                }
+                })
             }
-
-            // CUSTOMIZATION
+            // THEME
 
 
             // ADVANCED
