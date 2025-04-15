@@ -31,7 +31,8 @@ struct SettingsView: View {
     
     @Query private var focusItems: [Item] // Replace with your model name
     
-    let contextualAdvancedOptions: [ContextualSetting]
+    let inlineContextualOptions: [ContextualSetting]
+    let groupedContextualOptions: [ContextualSetting]
 
     var body: some View {
         Form {
@@ -116,7 +117,8 @@ struct SettingsView: View {
             }
             
             Section(header: Text("Advanced")) {
-                ForEach(contextualAdvancedOptions) { option in
+                // Inline contextual actions
+                ForEach(inlineContextualOptions) { option in
                     Button {
                         option.action()
                     } label: {
@@ -126,10 +128,19 @@ struct SettingsView: View {
                             } icon: {
                                 Image(systemName: image)
                             }
-
                         } else {
                             Text(option.title)
                         }
+                    }
+                }
+                
+                // Grouped options as a navigation link
+                if !groupedContextualOptions.isEmpty {
+                    NavigationLink("Contextual Settings") {
+                        ContextualSettingListView(
+                            title: "Advanced",
+                            options: groupedContextualOptions
+                        )
                     }
                 }
             }

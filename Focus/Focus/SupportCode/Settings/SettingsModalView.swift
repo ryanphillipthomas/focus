@@ -10,11 +10,16 @@ struct SettingsModalView: View {
     @EnvironmentObject var model: ThemeModel
     @Bindable var auth: AuthViewModel
 
-    let contextualAdvancedOptions: [ContextualSetting]
+    let inlineContextualOptions: [ContextualSetting]
+    let groupedContextualOptions: [ContextualSetting]
 
     var body: some View {
         NavigationView {
-            SettingsView(auth: auth, contextualAdvancedOptions: contextualAdvancedOptions)
+            SettingsView(
+                auth: auth,
+                inlineContextualOptions: inlineContextualOptions,
+                groupedContextualOptions: groupedContextualOptions
+            )
         }
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)

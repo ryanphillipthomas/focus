@@ -3,7 +3,7 @@
 //  Focus
 //
 //  Created by Ryan Thomas on 4/11/25.
-//
+
 import SwiftUI
 
 struct WithSettingsOverlay<Content: View>: View {
@@ -12,11 +12,17 @@ struct WithSettingsOverlay<Content: View>: View {
     @State var auth = AuthViewModel()
 
     let content: Content
-    let contextualSettings: [ContextualSetting]
+    let inlineContextualOptions: [ContextualSetting]
+    let groupedContextualOptions: [ContextualSetting]
 
-    init(contextualSettings: [ContextualSetting] = [], @ViewBuilder content: () -> Content) {
+    init(
+        inlineContextualOptions: [ContextualSetting] = [],
+        groupedContextualOptions: [ContextualSetting] = [],
+        @ViewBuilder content: () -> Content
+    ) {
         self.content = content()
-        self.contextualSettings = contextualSettings
+        self.inlineContextualOptions = inlineContextualOptions
+        self.groupedContextualOptions = groupedContextualOptions
     }
 
     var body: some View {
@@ -25,9 +31,12 @@ struct WithSettingsOverlay<Content: View>: View {
             SettingsButtonView(showSettings: $showSettings)
         }
         .sheet(isPresented: $showSettings) {
-            SettingsModalView(auth: auth, contextualAdvancedOptions: contextualSettings)
-                .environmentObject(model)
+            SettingsModalView(
+                auth: auth,
+                inlineContextualOptions: inlineContextualOptions,
+                groupedContextualOptions: groupedContextualOptions
+            )
+            .environmentObject(model)
         }
     }
 }
-
