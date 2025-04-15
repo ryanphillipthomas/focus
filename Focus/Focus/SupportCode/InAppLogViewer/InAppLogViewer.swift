@@ -38,7 +38,7 @@ struct InAppLogViewer: View {
 
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(entry.message)
-                                            .lineLimit(1)
+                                            .lineLimit(2)
                                             .truncationMode(.tail)
 
                                         Text(entry.timestamp.formatted(date: .omitted, time: .standard))

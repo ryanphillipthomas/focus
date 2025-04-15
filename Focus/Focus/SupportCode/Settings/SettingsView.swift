@@ -30,11 +30,12 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var modelContext
     
     @Query private var focusItems: [Item] // Replace with your model name
+    
+    let contextualAdvancedOptions: [ContextualSetting]
 
     var body: some View {
         Form {
-                        
-        Section(header: Text("Library")) {
+        Section(header: Text(LocalizedStringResource("support_code_library_version"))) {
                 NavigationLink(destination: AnalyticsSettingsListView()) {
                     Label("Analytics", systemImage: "gear")
                 }.simultaneousGesture(TapGesture().onEnded {
@@ -115,44 +116,25 @@ struct SettingsView: View {
             }
             
             Section(header: Text("Advanced")) {
-                Button("Reset Focus List") {
-                    AnalyticsManager.shared.logEvent("settings_selection_reset_focus_list")
+                ForEach(contextualAdvancedOptions) { option in
+                    Button {
+                        option.action()
+                    } label: {
+                        if let image = option.systemImage {
+                            Label {
+                                Text(option.title)
+                            } icon: {
+                                Image(systemName: image)
+                            }
+
+                        } else {
+                            Text(option.title)
+                        }
+                    }
                 }
-                .foregroundColor(.red)
-            }
-            HStack {
-                Text("Version")
-                Spacer()
-                Text(LocalizedStringResource("support_code_version")).foregroundColor(.secondary)
             }
         }
-        
         .navigationTitle("Support Code")
         .analyticsScreen(self)
-        
-        .sheet(item: $activeSheet) { sheet in
-            switch sheet {
-            case .subscription:
-                NavigationView {
-                    SubscriptionListView(viewModel: SubscriptionViewModel(mock: true))
-                }
-            case .calendarPicker:
-                NavigationView {
-                    CalendarListView(viewModel: calendarViewModel)
-                }
-            case .appearancePicker:
-                NavigationView {
-                    ThemeSelectionView()
-                }
-            case .notificationsPicker:
-                NavigationView {
-                    NotificationTestView()
-                }
-            case .authencation:
-                NavigationView {
-                    AuthView(auth: auth)
-                }
-            }
-        }
     }
 }

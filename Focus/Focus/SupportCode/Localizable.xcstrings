@@ -130,9 +130,6 @@
     "Let’s plan your first focus block" : {
 
     },
-    "Library" : {
-
-    },
     "Loading subscriptions..." : {
 
     },
@@ -149,6 +146,12 @@
 
     },
     "Login" : {
+
+    },
+    "Login as Test Account" : {
+
+    },
+    "Login as Test Account 2" : {
 
     },
     "Logs" : {
@@ -268,14 +271,14 @@
     "Support Code" : {
 
     },
-    "support_code_version" : {
+    "support_code_library_version" : {
       "comment" : "The version number of support code.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "1.0"
+            "value" : "Library 1.0"
           }
         }
       }
@@ -293,9 +296,6 @@
 
     },
     "Unavailable ❌" : {
-
-    },
-    "Version" : {
 
     },
     "View Onboarding Flow" : {
