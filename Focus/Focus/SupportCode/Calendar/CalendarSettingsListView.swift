@@ -31,12 +31,12 @@ struct CalendarSettingsListView: View {
                         InAppLogStore.shared.append("No calendars found in EKEventStore.", for: "Calendar", type: .calendar)
                     } else {
                         for calendar in calendars {
-                            let editable = calendar.allowsContentModifications ? "✅ Editable" : "🚫 Read-Only"
+                            let editable = calendar.allowsContentModifications ? "Editable" : "Read-Only"
                             let details = """
                                 Calendar: \(calendar.title)
                                 Source: \(calendar.source.title)
                                 ID: \(calendar.calendarIdentifier)
-                                \(editable)
+                                Permissions: \(editable)
                             """
                             InAppLogStore.shared.append(details, for: "Calendar", type: .calendar)
 
@@ -48,13 +48,13 @@ struct CalendarSettingsListView: View {
                             let events = calendarManager.eventStore.events(matching: predicate)
 
                             if events.isEmpty {
-                                InAppLogStore.shared.append("No events today in '\(calendar.title)'", for: "Calendar", type: .calendar)
+                                InAppLogStore.shared.append("No events found today in '\(calendar.title)'.", for: "Calendar", type: .calendar)
                             } else {
                                 for event in events {
                                     let start = DateFormatter.localizedString(from: event.startDate, dateStyle: .none, timeStyle: .short)
                                     let end = DateFormatter.localizedString(from: event.endDate, dateStyle: .none, timeStyle: .short)
                                     let location = event.location ?? "No location"
-                                    let summary = "📅 '\(event.title ?? "Untitled")' from \(start)–\(end) @ \(location)"
+                                    let summary = "'\(event.title ?? "Untitled")' from \(start) to \(end) — Location: \(location)"
                                     InAppLogStore.shared.append(summary, for: "Calendar", type: .calendar)
                                 }
                             }
@@ -63,8 +63,6 @@ struct CalendarSettingsListView: View {
 
                     calendarViewModel.loadCalendars()
                 }
-
-
 
                 if calendarManager.isAuthorized {
                     Button("Create Test Event") {
