@@ -28,6 +28,9 @@
     "App Icon" : {
 
     },
+    "Apple Health" : {
+
+    },
     "Are you sure you want to clear all logs?" : {
 
     },
@@ -247,9 +250,6 @@
     "Sign Up" : {
 
     },
-    "Sleep Last Night" : {
-
-    },
     "Start 2-Min Timer" : {
 
     },
@@ -257,9 +257,6 @@
 
     },
     "Status" : {
-
-    },
-    "Steps Today" : {
 
     },
     "Stop Timer" : {

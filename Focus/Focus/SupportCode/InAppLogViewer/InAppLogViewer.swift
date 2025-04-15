@@ -107,5 +107,7 @@ struct InAppLogViewer: View {
         store.append("Simulated user identification\n\(longText)", for: provider, type: .user)
         store.append("Simulated startup process\n\(longText)", for: provider, type: .startup)
         store.append("Simulated generic message\n\(longText)", for: provider, type: .generic)
+        store.append("Simulated health message\n\(longText)", for: provider, type: .health)
+
     }
 }

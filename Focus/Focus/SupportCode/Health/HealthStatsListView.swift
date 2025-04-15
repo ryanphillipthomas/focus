@@ -15,18 +15,9 @@ struct HealthStatsListView: View {
         List {
             if healthManager.isAuthorized {
                 Section {
-                    HStack {
-                        Label("Steps Today", systemImage: "figure.walk")
-                        Spacer()
-                        Text("\(Int(healthManager.stepCountToday))")
+                    NavigationLink("Logs") {
+                        InAppLogViewer(provider: "Apple Health")
                     }
-
-                    HStack {
-                        Label("Sleep Last Night", systemImage: "bed.double.fill")
-                        Spacer()
-                        Text(String(format: "%.1f hrs", healthManager.sleepHoursLastNight))
-                    }
-
                     Button("Refresh Health Data") {
                         Task {
                             AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
@@ -36,6 +27,9 @@ struct HealthStatsListView: View {
                 }
             } else {
                 Section {
+                    NavigationLink("Logs") {
+                        InAppLogViewer(provider: "Apple Health")
+                    }
                     Button("Connect Apple Health") {
                         Task {
                             AnalyticsManager.shared.logEvent("settings_selection_connect_health")
