@@ -15,7 +15,7 @@ struct LogEntry: Identifiable {
 }
 
 enum LogType {
-    case event, screen, user, startup, generic, health
+    case event, screen, user, startup, generic, health, calendar
 
     var symbolName: String {
         switch self {
@@ -25,6 +25,7 @@ enum LogType {
         case .startup: return "sparkles"
         case .generic: return "doc.text.fill"
         case .health: return "heart.fill"
+        case .calendar: return "calendar"
         }
     }
 
@@ -36,6 +37,7 @@ enum LogType {
         case .startup: return .purple
         case .generic: return .gray
         case .health: return .red
+        case .calendar: return .indigo
         }
     }
 }

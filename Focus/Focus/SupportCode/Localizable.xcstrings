@@ -46,9 +46,6 @@
     "Cancel" : {
 
     },
-    "Choose Calendar" : {
-
-    },
     "Choose Your Plan" : {
 
     },
@@ -64,13 +61,13 @@
     "Connected to Apple Music" : {
 
     },
-    "Connected to Calendar" : {
-
-    },
     "Connected to Reminders" : {
 
     },
     "Contextual Settings" : {
+
+    },
+    "Create Test Event" : {
 
     },
     "Custom" : {
@@ -134,6 +131,9 @@
 
     },
     "Let’s plan your first focus block" : {
+
+    },
+    "Load All Calendars" : {
 
     },
     "Loading subscriptions..." : {
@@ -233,9 +233,6 @@
 
     },
     "Select Calendar" : {
-
-    },
-    "Selected Calendar" : {
 
     },
     "Send Reset Email" : {
