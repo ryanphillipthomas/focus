@@ -9,25 +9,21 @@
 import Foundation
 import Combine
 
-final class InAppLogStore: ObservableObject {
+class InAppLogStore: ObservableObject {
     static let shared = InAppLogStore()
 
     @Published private(set) var logsByProvider: [String: [LogEntry]] = [:]
 
-    private let queue = DispatchQueue(label: "InAppLogStoreQueue", qos: .utility)
-
     private init() {}
-
-    // MARK: - Public API
 
     func append(_ message: String, for provider: String, type: LogType = .generic) {
         let entry = LogEntry(message: message, timestamp: Date(), type: type)
-        queue.async {
+
+        // 👇 Dispatch everything at once to main queue — avoids overwrites
+        DispatchQueue.main.async {
             var logs = self.logsByProvider[provider] ?? []
             logs.append(entry)
-            DispatchQueue.main.async {
-                self.logsByProvider[provider] = logs
-            }
+            self.logsByProvider[provider] = logs
         }
     }
 

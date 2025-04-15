@@ -86,8 +86,7 @@ struct InAppLogViewer: View {
 
     private func logTestEvents() {
         let longText = """
-        
-         This is a long simulated log message that could represent an API request or response.
+        This is a long simulated log message that could represent an API request or response.
         {
             "user_id": 123,
             "action": "test_event",
@@ -103,10 +102,10 @@ struct InAppLogViewer: View {
         End of log.
         """
 
-        store.append("Simulated event log\n\n\(longText)", for: provider, type: .event)
-        store.append("Simulated screen view\n\n\(longText)", for: provider, type: .screen)
-        store.append("Simulated user identification\n\n\(longText)", for: provider, type: .user)
-        store.append("Simulated startup process\n\n\(longText)", for: provider, type: .startup)
-        store.append("Simulated generic message\n\n\(longText)", for: provider, type: .generic)
+        store.append("Simulated event log\n\(longText)", for: provider, type: .event)
+        store.append("Simulated screen view\n\(longText)", for: provider, type: .screen)
+        store.append("Simulated user identification\n\(longText)", for: provider, type: .user)
+        store.append("Simulated startup process\n\(longText)", for: provider, type: .startup)
+        store.append("Simulated generic message\n\(longText)", for: provider, type: .generic)
     }
 }
