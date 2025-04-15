@@ -12,18 +12,11 @@ struct AnalyticsSettingsListView: View {
     var body: some View {
         List {
             Section(header: Text("Analytics")) {
-                HStack {
-                    Text("Firebase Analytics")
-                    Spacer()
-                    Text("Enabled")
-                        .foregroundColor(.secondary)
+                NavigationLink("Firebase Logs") {
+                    InAppLogViewer(provider: "Firebase")
                 }
-
-                HStack {
-                    Text("Mixpanel Analytics")
-                    Spacer()
-                    Text("Enabled")
-                        .foregroundColor(.secondary)
+                NavigationLink("Mixpanel Logs") {
+                    InAppLogViewer(provider: "Mixpanel")
                 }
             }
         }

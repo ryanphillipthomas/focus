@@ -1,0 +1,300 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "%@ Logs" : {
+
+    },
+    "%lld" : {
+
+    },
+    "Accent Color" : {
+
+    },
+    "Active ✅" : {
+
+    },
+    "Add" : {
+
+    },
+    "Add Test Reminder" : {
+
+    },
+    "Advanced" : {
+
+    },
+    "Analytics" : {
+
+    },
+    "App Icon" : {
+
+    },
+    "Authentication" : {
+
+    },
+    "Cache" : {
+
+    },
+    "Calendar" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Choose Calendar" : {
+
+    },
+    "Choose Your Plan" : {
+
+    },
+    "Clear" : {
+
+    },
+    "Connect Apple Health" : {
+
+    },
+    "Connect Apple Music" : {
+
+    },
+    "Connected to Apple Music" : {
+
+    },
+    "Connected to Calendar" : {
+
+    },
+    "Connected to Reminders" : {
+
+    },
+    "Custom" : {
+
+    },
+    "Customize" : {
+
+    },
+    "Dismiss" : {
+
+    },
+    "Email" : {
+
+    },
+    "Enable Calendar Access" : {
+
+    },
+    "Enable Reminder Access" : {
+
+    },
+    "Enter your email" : {
+
+    },
+    "Fetch Reminders" : {
+
+    },
+    "Firebase Logs" : {
+
+    },
+    "Focus List" : {
+
+    },
+    "Forgot Password" : {
+
+    },
+    "Forgot Password?" : {
+
+    },
+    "Free" : {
+
+    },
+    "Get Started" : {
+
+    },
+    "Have an account? Log in" : {
+
+    },
+    "Health" : {
+
+    },
+    "How do you like to work?" : {
+
+    },
+    "iCloud" : {
+
+    },
+    "iCloud Sync" : {
+
+    },
+    "Let’s plan your first focus block" : {
+
+    },
+    "Library" : {
+
+    },
+    "Loading subscriptions..." : {
+
+    },
+    "Log In" : {
+
+    },
+    "Log Out" : {
+
+    },
+    "Login" : {
+
+    },
+    "Manage Subscription" : {
+
+    },
+    "Mixpanel Logs" : {
+
+    },
+    "Music" : {
+
+    },
+    "Need an account? Sign up" : {
+
+    },
+    "Next" : {
+
+    },
+    "No focus items yet" : {
+
+    },
+    "Notifications" : {
+
+    },
+    "Onboarding" : {
+
+    },
+    "Paid" : {
+
+    },
+    "Password" : {
+
+    },
+    "Play Sample Song" : {
+
+    },
+    "Push Notifications" : {
+
+    },
+    "Rate This App" : {
+
+    },
+    "Refresh Health Data" : {
+
+    },
+    "Refresh iCloud Status" : {
+
+    },
+    "Reminders" : {
+
+    },
+    "Request Permission" : {
+
+    },
+    "Reset Focus List" : {
+
+    },
+    "Reset Onboarding" : {
+
+    },
+    "Reset Password" : {
+
+    },
+    "Restore Purchases" : {
+
+    },
+    "Review App" : {
+
+    },
+    "Select Calendar" : {
+
+    },
+    "Selected Calendar" : {
+
+    },
+    "Send Reset Email" : {
+
+    },
+    "Send: %@" : {
+
+    },
+    "Setup Notifications" : {
+
+    },
+    "Sign Up" : {
+
+    },
+    "Sleep Last Night" : {
+
+    },
+    "Start 2-Min Timer" : {
+
+    },
+    "Start Planning" : {
+
+    },
+    "Status" : {
+
+    },
+    "Steps Today" : {
+
+    },
+    "Stop Timer" : {
+
+    },
+    "Subscribe" : {
+
+    },
+    "Subscriptions" : {
+
+    },
+    "Support Code" : {
+
+    },
+    "support_code_version" : {
+      "comment" : "The version number of support code.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1.0"
+          }
+        }
+      }
+    },
+    "Test All Notifications" : {
+
+    },
+    "Test Notifications" : {
+
+    },
+    "Theme" : {
+
+    },
+    "Time Remaining: %@" : {
+
+    },
+    "Unavailable ❌" : {
+
+    },
+    "Version" : {
+
+    },
+    "View Onboarding Flow" : {
+
+    },
+    "Welcome to Focus" : {
+
+    },
+    "You're all set!" : {
+
+    },
+    "Your AI-powered productivity sidekick" : {
+
+    }
+  },
+  "version" : "1.0"
+}
