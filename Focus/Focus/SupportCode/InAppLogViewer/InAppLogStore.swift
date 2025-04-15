@@ -7,29 +7,38 @@
 
 
 import Foundation
+import Combine
 
-class InAppLogStore: ObservableObject {
+final class InAppLogStore: ObservableObject {
     static let shared = InAppLogStore()
-    
-    @Published private(set) var logs: [String: [String]] = [:]
+
+    @Published private(set) var logsByProvider: [String: [LogEntry]] = [:]
+
+    private let queue = DispatchQueue(label: "InAppLogStoreQueue", qos: .utility)
 
     private init() {}
 
-    func append(_ message: String, for provider: String) {
-        DispatchQueue.main.async {
-            var entries = self.logs[provider] ?? []
-            entries.append(message)
-            self.logs[provider] = entries
+    // MARK: - Public API
+
+    func append(_ message: String, for provider: String, type: LogType = .generic) {
+        let entry = LogEntry(message: message, timestamp: Date(), type: type)
+        queue.async {
+            var logs = self.logsByProvider[provider] ?? []
+            logs.append(entry)
+            DispatchQueue.main.async {
+                self.logsByProvider[provider] = logs
+            }
         }
     }
 
     func clear(provider: String) {
         DispatchQueue.main.async {
-            self.logs[provider] = []
+            self.logsByProvider[provider] = []
         }
     }
 
-    func allLogs(for provider: String) -> [String] {
-        logs[provider] ?? []
+    func allLogs(for provider: String) -> [LogEntry] {
+        logsByProvider[provider] ?? []
     }
 }
+

@@ -4,9 +4,6 @@
     "" : {
 
     },
-    "%@ Logs" : {
-
-    },
     "%lld" : {
 
     },
@@ -31,6 +28,9 @@
     "App Icon" : {
 
     },
+    "Are you sure you want to clear all logs?" : {
+
+    },
     "Authentication" : {
 
     },
@@ -49,7 +49,7 @@
     "Choose Your Plan" : {
 
     },
-    "Clear" : {
+    "Clear Logs" : {
 
     },
     "Connect Apple Health" : {
@@ -71,6 +71,9 @@
 
     },
     "Customize" : {
+
+    },
+    "Details" : {
 
     },
     "Dismiss" : {
@@ -133,13 +136,22 @@
     "Loading subscriptions..." : {
 
     },
+    "Log Detail" : {
+
+    },
     "Log In" : {
 
     },
     "Log Out" : {
 
     },
+    "Log Test Events" : {
+
+    },
     "Login" : {
+
+    },
+    "Logs" : {
 
     },
     "Manage Subscription" : {
@@ -158,6 +170,9 @@
 
     },
     "No focus items yet" : {
+
+    },
+    "No logs yet" : {
 
     },
     "Notifications" : {
