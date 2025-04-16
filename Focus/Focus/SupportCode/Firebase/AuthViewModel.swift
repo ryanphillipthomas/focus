@@ -37,15 +37,12 @@ class AuthViewModel: ObservableObject {
             self.user = result.user
             self.errorMessage = nil
             AnalyticsManager.shared.setUser(id: result.user.uid)
-            AnalyticsManager.shared.logEvent("Sign In Success", parameters: [
-                "email": email
-            ])
+            AnalyticsManager.shared.logEvent("Sign In Success", parameters: ["email": email])
+            InAppLogStore.shared.append("Sign in success for \(email)", for: "Auth", type: .authentication)
         } catch {
             self.errorMessage = error.localizedDescription
-            AnalyticsManager.shared.logEvent("Sign In Failed", parameters: [
-                "email": email,
-                "error": error.localizedDescription
-            ])
+            AnalyticsManager.shared.logEvent("Sign In Failed", parameters: ["email": email, "error": error.localizedDescription])
+            InAppLogStore.shared.append("Sign in failed for \(email): \(error.localizedDescription)", for: "Auth", type: .authentication)
         }
     }
 
@@ -55,15 +52,12 @@ class AuthViewModel: ObservableObject {
             self.user = result.user
             self.errorMessage = nil
             AnalyticsManager.shared.setUser(id: result.user.uid)
-            AnalyticsManager.shared.logEvent("Sign Up Success", parameters: [
-                "email": email
-            ])
+            AnalyticsManager.shared.logEvent("Sign Up Success", parameters: ["email": email])
+            InAppLogStore.shared.append("Sign up success for \(email)", for: "Auth", type: .authentication)
         } catch {
             self.errorMessage = error.localizedDescription
-            AnalyticsManager.shared.logEvent("Sign Up Failed", parameters: [
-                "email": email,
-                "error": error.localizedDescription
-            ])
+            AnalyticsManager.shared.logEvent("Sign Up Failed", parameters: ["email": email, "error": error.localizedDescription])
+            InAppLogStore.shared.append("Sign up failed for \(email): \(error.localizedDescription)", for: "Auth", type: .authentication)
         }
     }
 
@@ -73,24 +67,25 @@ class AuthViewModel: ObservableObject {
             self.user = nil
             AnalyticsManager.shared.setUser(id: nil)
             AnalyticsManager.shared.logEvent("Sign Out")
+            InAppLogStore.shared.append("Signed out", for: "Auth", type: .authentication)
         } catch {
             self.errorMessage = error.localizedDescription
-            AnalyticsManager.shared.logEvent("Sign Out Failed", parameters: [
-                "error": error.localizedDescription
-            ])
+            AnalyticsManager.shared.logEvent("Sign Out Failed", parameters: ["error": error.localizedDescription])
+            InAppLogStore.shared.append("Sign out failed: \(error.localizedDescription)", for: "Auth", type: .authentication)
         }
     }
-    
+
     func resetPassword(email: String) async {
         do {
             try await Auth.auth().sendPasswordReset(withEmail: email)
             errorMessage = nil
             AnalyticsManager.shared.logEvent("Send Password Reset")
+            InAppLogStore.shared.append("Password reset sent to \(email)", for: "Auth", type: .authentication)
         } catch {
             self.errorMessage = error.localizedDescription
-            AnalyticsManager.shared.logEvent("Send Password Reset Failed", parameters: [
-                "error": error.localizedDescription
-            ])
+            AnalyticsManager.shared.logEvent("Send Password Reset Failed", parameters: ["error": error.localizedDescription])
+            InAppLogStore.shared.append("Password reset failed for \(email): \(error.localizedDescription)", for: "Auth", type: .authentication)
         }
     }
+
 }

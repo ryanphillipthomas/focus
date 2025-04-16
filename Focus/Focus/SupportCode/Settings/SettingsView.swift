@@ -61,7 +61,7 @@ struct SettingsView: View {
                     AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
                 })
                 
-                NavigationLink(destination: MusicListView(musicManager: musicManager)) {
+                NavigationLink(destination: iCloudListView(iCloudStatus: iCloudStatus)) {
                     Label("iCloud", systemImage: "icloud")
                 }.simultaneousGesture(TapGesture().onEnded {
                     AnalyticsManager.shared.logEvent("settings_selection_refresh_icloud")

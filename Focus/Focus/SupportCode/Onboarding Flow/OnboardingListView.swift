@@ -18,10 +18,14 @@ struct OnboardingListView: View {
                 }
 
                 Button("Reset Onboarding") {
+                    InAppLogStore.shared.append("Reset Onboarding Flow", for: "Onboarding", type: .onboarding)
                     AnalyticsManager.shared.logEvent("settings_selection_reset_onboarding")
                     hasCompletedOnboarding = false
                 }
                 .foregroundColor(.red)
+            }
+            NavigationLink("Logs") {
+                InAppLogViewer(provider: "Onboarding")
             }
         }
     }

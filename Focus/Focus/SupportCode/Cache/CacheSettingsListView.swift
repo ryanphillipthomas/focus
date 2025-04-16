@@ -23,18 +23,27 @@ struct CacheSettingsListView: View {
                 }
                 .foregroundColor(.red)
             }
+            Section(){
+                NavigationLink("Logs"){
+                    InAppLogViewer(provider: "Cache")
+                }
+            }
         }
     }
     
     private func resetFocusItems() {
+        let count = focusItems.count
+
         for item in focusItems {
             modelContext.delete(item)
         }
 
         do {
             try modelContext.save()
+            InAppLogStore.shared.append("Reset \(count) focus item(s) from cache", for: "Cache", type: .cache)
         } catch {
-            print("❌ Failed to delete focus items: \(error)")
+            InAppLogStore.shared.append("Failed to reset focus items: \(error.localizedDescription)", for: "Cache", type: .cache)
         }
     }
+
 }

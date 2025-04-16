@@ -14,11 +14,8 @@ struct iCloudListView: View {
     var body: some View {
         List {
             Section(header: Text("iCloud")) {
-                HStack {
-                    Label("iCloud Sync", systemImage: "icloud")
-                    Spacer()
-                    Text(iCloudStatus.iCloudAvailable ? "Active ✅" : "Unavailable ❌")
-                        .foregroundColor(iCloudStatus.iCloudAvailable ? .green : .secondary)
+                NavigationLink("Logs") {
+                    InAppLogViewer(provider: "iCloud")
                 }
 
                 Button("Refresh iCloud Status") {

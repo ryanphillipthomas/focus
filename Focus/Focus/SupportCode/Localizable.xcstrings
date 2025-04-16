@@ -10,9 +10,6 @@
     "Accent Color" : {
 
     },
-    "Active ✅" : {
-
-    },
     "Add" : {
 
     },
@@ -56,12 +53,6 @@
 
     },
     "Connect Apple Music" : {
-
-    },
-    "Connected to Apple Music" : {
-
-    },
-    "Connected to Reminders" : {
 
     },
     "Contextual Settings" : {
@@ -127,13 +118,7 @@
     "iCloud" : {
 
     },
-    "iCloud Sync" : {
-
-    },
     "Let’s plan your first focus block" : {
-
-    },
-    "Load All Calendars" : {
 
     },
     "Loading subscriptions..." : {
@@ -203,6 +188,9 @@
 
     },
     "Rate This App" : {
+
+    },
+    "Refresh Calendars" : {
 
     },
     "Refresh Health Data" : {
@@ -290,9 +278,6 @@
 
     },
     "Time Remaining: %@" : {
-
-    },
-    "Unavailable ❌" : {
 
     },
     "View Onboarding Flow" : {

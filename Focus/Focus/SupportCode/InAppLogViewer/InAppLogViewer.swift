@@ -108,6 +108,7 @@ struct InAppLogViewer: View {
         store.append("Simulated startup process\n\(longText)", for: provider, type: .startup)
         store.append("Simulated generic message\n\(longText)", for: provider, type: .generic)
         store.append("Simulated health message\n\(longText)", for: provider, type: .health)
+        store.append("Simulated calendar message\n\(longText)", for: provider, type: .calendar)
 
     }
 }

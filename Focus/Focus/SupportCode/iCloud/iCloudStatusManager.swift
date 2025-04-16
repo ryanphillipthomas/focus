@@ -22,13 +22,29 @@ class iCloudStatusManager: ObservableObject {
                 switch status {
                 case .available:
                     self.iCloudAvailable = true
-                default:
+                    InAppLogStore.shared.append("iCloud is available.", for: "iCloud", type: .icloud)
+                case .noAccount:
                     self.iCloudAvailable = false
-                    if let error = error {
-                        print("iCloud status error: \(error.localizedDescription)")
-                    }
+                    InAppLogStore.shared.append("iCloud unavailable: No iCloud account.", for: "iCloud", type: .icloud)
+                case .restricted:
+                    self.iCloudAvailable = false
+                    InAppLogStore.shared.append("iCloud unavailable: Access is restricted.", for: "iCloud", type: .icloud)
+                case .couldNotDetermine:
+                    self.iCloudAvailable = false
+                    InAppLogStore.shared.append("iCloud unavailable: Could not determine status.", for: "iCloud", type: .icloud)
+                case .temporarilyUnavailable:
+                    self.iCloudAvailable = false
+                    InAppLogStore.shared.append("iCloud teporarily unavailable: Could not determine status.", for: "iCloud", type: .icloud)
+                @unknown default:
+                    self.iCloudAvailable = false
+                    InAppLogStore.shared.append("iCloud unavailable: Unknown error.", for: "iCloud", type: .icloud)
+                }
+
+                if let error = error {
+                    InAppLogStore.shared.append("iCloud status error: \(error.localizedDescription)", for: "iCloud", type: .icloud)
                 }
             }
         }
     }
 }
+

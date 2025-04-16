@@ -31,16 +31,23 @@ struct NotificationTestView: View {
                     scheduleAllTestNotifications()
                 }
             }
+            Section(header: Text("Logs")) {
+                NavigationLink("Logs") {
+                    InAppLogViewer(provider: "Notifications")
+                }
+            }
+            
         }.navigationTitle("Notifications")
     }
 }
 
 func scheduleAllTestNotifications() {
     for (i, type) in UserNotificationPreferences.defaultPreferences.preferences.enumerated() {
-        scheduleTestNotification(type: type, in: Double(3 * (i + 1)))
+        let delay = Double(3 * (i + 1))
+        scheduleTestNotification(type: type, in: delay)
+        InAppLogStore.shared.append("Queued test notification '\(type.title)' in \(delay) seconds", for: "Notifications", type: .notifications)
     }
 }
-
 
 func scheduleTestNotification(type: NotificationType, in seconds: TimeInterval = 5) {
     let content = UNMutableNotificationContent()
@@ -53,10 +60,13 @@ func scheduleTestNotification(type: NotificationType, in seconds: TimeInterval =
 
     UNUserNotificationCenter.current().add(request) { error in
         if let error = error {
-            print("Failed to schedule test notification: \(error)")
+            let message = "Failed to schedule test notification '\(type.title)': \(error.localizedDescription)"
+            InAppLogStore.shared.append(message, for: "Notifications", type: .notifications)
         } else {
-            print("Scheduled notification for: \(type.title)")
+            let message = "Scheduled notification '\(type.title)' for delivery in \(Int(seconds))s"
+            InAppLogStore.shared.append(message, for: "Notifications", type: .notifications)
         }
     }
 }
+
 

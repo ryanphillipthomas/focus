@@ -5,7 +5,6 @@
 //  Created by Ryan Thomas on 4/14/25.
 //
 
-
 import SwiftUI
 
 struct RemindersListView: View {
@@ -15,16 +14,13 @@ struct RemindersListView: View {
         List {
             if reminderManager.isAuthorized {
                 Section {
-                    Label("Connected to Reminders", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
-
-                    ForEach(reminderManager.reminders.prefix(5), id: \.calendarItemIdentifier) { reminder in
-                        Text(reminder.title)
-                    }
-
                     Button("Fetch Reminders") {
                         AnalyticsManager.shared.logEvent("settings_selection_fetch_reminders")
                         reminderManager.fetchReminders()
+
+                        for reminder in reminderManager.reminders {
+                            InAppLogStore.shared.append("Reminder: '\(reminder.title)'", for: "Reminders", type: .reminders)
+                        }
                     }
 
                     Button("Add Test Reminder") {
@@ -40,9 +36,16 @@ struct RemindersListView: View {
                     Button("Enable Reminder Access") {
                         AnalyticsManager.shared.logEvent("settings_selection_enable_reminders")
                         reminderManager.requestAccess { granted in
-                            print(granted ? "✅ Reminder access granted" : "❌ Reminder access denied")
+                            let message = granted ? "Reminder access granted" : "Reminder access denied"
+                            InAppLogStore.shared.append(message, for: "Reminders", type: .reminders)
                         }
                     }
+                }
+            }
+
+            Section {
+                NavigationLink("Logs") {
+                    InAppLogViewer(provider: "Reminders")
                 }
             }
         }

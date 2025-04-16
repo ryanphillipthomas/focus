@@ -26,6 +26,9 @@ struct AuthenticationListView: View {
                     Label("Log Out", systemImage: "arrow.backward.square")
                 }
             }
+            NavigationLink("Logs") {
+                InAppLogViewer(provider: "Auth")
+            }
         }
     }
 }

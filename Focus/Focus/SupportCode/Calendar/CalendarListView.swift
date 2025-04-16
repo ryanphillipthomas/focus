@@ -17,6 +17,15 @@ struct CalendarListView: View {
         List(viewModel.calendars, id: \.calendarIdentifier) { calendar in
             Button(action: {
                 viewModel.selectCalendar(calendar)
+
+                // 🔍 Log calendar selection
+                InAppLogStore.shared.append("Selected calendar '\(calendar.title)' (ID: \(calendar.calendarIdentifier))", for: "Calendar", type: .calendar)
+                AnalyticsManager.shared.logEvent("calendar_selected", parameters: [
+                    "calendar_id": calendar.calendarIdentifier,
+                    "calendar_title": calendar.title,
+                    "calendar_source": calendar.source.title
+                ])
+
                 dismiss()
             }) {
                 HStack {

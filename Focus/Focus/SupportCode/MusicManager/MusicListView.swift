@@ -23,9 +23,6 @@ struct MusicListView: View {
                         }
                     }
                     .disabled(!musicManager.isSubscribed)
-
-                    Label("Connected to Apple Music", systemImage: "checkmark.circle")
-                        .foregroundColor(.green)
                 } else {
                     Button("Connect Apple Music") {
                         AnalyticsManager.shared.logEvent("settings_selection_connect_apple_music")
@@ -34,11 +31,8 @@ struct MusicListView: View {
                         }
                     }
                 }
-
-                if !musicManager.statusMessage.isEmpty {
-                    Text(musicManager.statusMessage)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
+                NavigationLink("Logs") {
+                    InAppLogViewer(provider: "Music")
                 }
             }
         }

@@ -5,6 +5,7 @@
 //  Created by Ryan Thomas on 4/5/25.
 //
 import SwiftUI
+
 // Completion Step
 struct OnboardingCompletionStep: View {
     let onDone: () -> Void
@@ -16,8 +17,8 @@ struct OnboardingCompletionStep: View {
             Text("Let’s plan your first focus block")
             Spacer()
             Button("Start Planning") {
-                // Navigate to main app
                 AnalyticsManager.shared.logEvent("onboarding_selection_start_planning")
+                InAppLogStore.shared.append("Completed onboarding and tapped 'Start Planning'", for: "Onboarding", type: .onboarding)
                 onDone()
             }
             .buttonStyle(.borderedProminent)
