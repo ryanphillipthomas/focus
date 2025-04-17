@@ -73,6 +73,12 @@
     "Dismiss" : {
 
     },
+    "Done" : {
+
+    },
+    "Edit" : {
+
+    },
     "Email" : {
 
     },
@@ -112,6 +118,12 @@
     "Health" : {
 
     },
+    "Hidden Items" : {
+
+    },
+    "Hide" : {
+
+    },
     "How do you like to work?" : {
 
     },
@@ -125,9 +137,6 @@
 
     },
     "Log Detail" : {
-
-    },
-    "Log In" : {
 
     },
     "Log Out" : {
@@ -229,6 +238,9 @@
     "Send: %@" : {
 
     },
+    "Settings" : {
+
+    },
     "Setup Notifications" : {
 
     },
@@ -253,9 +265,6 @@
     "Subscriptions" : {
 
     },
-    "Support Code" : {
-
-    },
     "support_code_library_version" : {
       "comment" : "The version number of support code.",
       "extractionState" : "manual",
@@ -278,6 +287,9 @@
 
     },
     "Time Remaining: %@" : {
+
+    },
+    "Unhide" : {
 
     },
     "View Onboarding Flow" : {

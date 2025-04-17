@@ -14,12 +14,9 @@ struct AuthenticationListView: View {
     var body: some View {
         List {
             Section(header: Text("Authentication")) {
-                Button {
+                NavigationLink("Login") {
                     AuthView(auth: auth)
-                } label: {
-                    Label("Log In", systemImage: "arrow.forward.square")
                 }
-
                 Button(role: .destructive) {
                     auth.signOut()
                 } label: {

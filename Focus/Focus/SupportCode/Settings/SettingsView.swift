@@ -8,6 +8,35 @@ import SwiftUI
 import SwiftData
 import StoreKit
 
+struct SettingItem: Identifiable, Codable, Hashable {
+    let id: UUID
+    var title: String
+    var icon: String
+    var destinationID: String
+    var isVisible: Bool = true
+
+    init(id: UUID = UUID(), title: String, icon: String, destinationID: String, isVisible: Bool = true) {
+        self.id = id
+        self.title = title
+        self.icon = icon
+        self.destinationID = destinationID
+        self.isVisible = isVisible
+    }
+}
+
+struct SettingSection: Identifiable, Codable, Hashable {
+    let id: UUID
+    var title: String
+    var items: [SettingItem]
+    var isVisible: Bool = true
+
+    init(id: UUID = UUID(), title: String, items: [SettingItem], isVisible: Bool = true) {
+        self.id = id
+        self.title = title
+        self.items = items
+        self.isVisible = isVisible
+    }
+}
 
 struct SettingsView: View {
     @EnvironmentObject var model: ThemeModel
@@ -20,132 +49,173 @@ struct SettingsView: View {
     @StateObject private var iCloudStatus = iCloudStatusManager()
     @Bindable var auth: AuthViewModel
 
-    
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
-        
+    @AppStorage("customSettingsLayout") private var savedSettingsData: Data?
+
     @State private var activeSheet: SettingsSheet?
-    @State private var showSubscriptionSheet = false
-    @State private var showCalendarPicker = false
-    
-    @Environment(\.modelContext) private var modelContext
-    
-    @Query private var focusItems: [Item] // Replace with your model name
-    
+    @State private var isEditing = false
+    @State private var sections: [SettingSection] = []
+
     let inlineContextualOptions: [ContextualSetting]
     let groupedContextualOptions: [ContextualSetting]
 
     var body: some View {
-        Form {
-            Section(header: Text(LocalizedStringResource("support_code_library_version"))) {
-                NavigationLink(destination: AnalyticsSettingsListView()) {
-                    Label("Analytics", systemImage: "gear")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_analytics")
-                })
-                
-                NavigationLink(destination: CalendarSettingsListView(calendarManager: calendarManager, calendarViewModel: calendarViewModel)) {
-                    Label("Calendar", systemImage: "calendar")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_authentication")
-                })
-                
-                NavigationLink(destination: AuthenticationListView(auth: auth)) {
-                    Label("Authentication", systemImage: "lock")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_authentication")
-                })
-                
-                NavigationLink(destination: HealthStatsListView()) {
-                    Label("Health", systemImage: "heart")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_refresh_health")
-                })
-                
-                NavigationLink(destination: iCloudListView(iCloudStatus: iCloudStatus)) {
-                    Label("iCloud", systemImage: "icloud")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_refresh_icloud")
-                })
-                
-                NavigationLink(destination: MusicListView(musicManager: musicManager)) {
-                    Label("Music", systemImage: "music.quarternote.3")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_connect_apple_music")
-                })
-                
-                NavigationLink(destination: NotificationTestView()) {
-                    Label("Push Notifications", systemImage: "bell")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_manage_notifications")
-                })
-                
-                NavigationLink(destination: OnboardingListView(hasCompletedOnboarding: $hasCompletedOnboarding)) {
-                    Label("Onboarding", systemImage: "chart.line.text.clipboard")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_onboarding")
-                })
-                
-                NavigationLink(destination: RemindersListView(reminderManager:reminderManager)) {
-                    Label("Reminders", systemImage: "checklist")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_reminders")
-                })
-                
-                NavigationLink(destination: SubscriptionListView(viewModel: SubscriptionViewModel(mock: true))) {
-                    Label("Subscriptions", systemImage: "dollarsign.arrow.trianglehead.counterclockwise.rotate.90")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_upgrade_to_pro")
-                })
-                
-                NavigationLink(destination: ThemeSelectionView()) {
-                    Label("Theme", systemImage: "paintpalette")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_customize")
-                })
-                
-                NavigationLink(destination: CacheSettingsListView()) {
-                    Label("Cache", systemImage: "externaldrive")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_cache")
-                })
-                
-                NavigationLink(destination: AppReviewListView()) {
-                    Label("Review App", systemImage: "star")
-                }.simultaneousGesture(TapGesture().onEnded {
-                    AnalyticsManager.shared.logEvent("settings_selection_rate")
-                })
-            }
-            
-            Section(header: Text("Advanced")) {
-                // Inline contextual actions
-                ForEach(inlineContextualOptions) { option in
-                    Button {
-                        option.action()
-                    } label: {
-                        if let image = option.systemImage {
-                            Label {
-                                Text(option.title)
-                            } icon: {
-                                Image(systemName: image)
+        NavigationStack {
+            List {
+                ForEach($sections) { $section in
+                    if section.isVisible {
+                        Section(header: Text(section.title)) {
+                            ForEach($section.items) { $item in
+                                if item.isVisible {
+                                    HStack {
+                                        if item.destinationID.hasPrefix("inlineButton") {
+                                            resolveDestination(for: item.destinationID)
+                                        } else {
+                                            NavigationLink(destination: resolveDestination(for: item.destinationID)) {
+                                                Label(item.title, systemImage: item.icon)
+                                            }
+                                        }
+                                        if isEditing {
+                                            Spacer()
+                                            Button(role: .destructive) {
+                                                item.isVisible = false
+                                                saveSections()
+                                            } label: {
+                                                Label("Hide", systemImage: "minus.circle")
+                                            }
+                                            .labelStyle(.iconOnly)
+                                        }
+                                    }
+                                }
                             }
-                        } else {
-                            Text(option.title)
+                            .onMove { from, to in
+                                section.items.move(fromOffsets: from, toOffset: to)
+                                saveSections()
+                            }
                         }
                     }
                 }
-                
-                // Grouped options as a navigation link
-                if !groupedContextualOptions.isEmpty {
-                    NavigationLink("Contextual Settings") {
-                        ContextualSettingListView(
-                            title: "Advanced",
-                            options: groupedContextualOptions
-                        )
+                .onMove { from, to in
+                    sections.move(fromOffsets: from, toOffset: to)
+                    saveSections()
+                }
+
+                // Hidden Items Section
+                if isEditing {
+                    Section(header: Text("Hidden Items")) {
+                        ForEach($sections) { $section in
+                            ForEach($section.items) { $item in
+                                if !item.isVisible {
+                                    HStack {
+                                        Label(item.title, systemImage: item.icon)
+                                        Spacer()
+                                        Button {
+                                            item.isVisible = true
+                                            saveSections()
+                                        } label: {
+                                            Label("Unhide", systemImage: "plus.circle")
+                                        }
+                                        .labelStyle(.iconOnly)
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+            .navigationTitle("Settings")
+            .environment(\.editMode, .constant(isEditing ? EditMode.active : EditMode.inactive))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(isEditing ? "Done" : "Edit") {
+                        isEditing.toggle()
+                    }
+                }
+            }
+            .onAppear {
+                sections = loadSections()
+            }
         }
-        .navigationTitle("Support Code")
         .analyticsScreen(self)
+    }
+
+    func saveSections() {
+        do {
+            let encoded = try JSONEncoder().encode(sections)
+            savedSettingsData = encoded
+        } catch {
+            print("Failed to save settings layout: \(error)")
+        }
+    }
+
+    func loadSections() -> [SettingSection] {
+        guard let data = savedSettingsData else {
+            return defaultSections()
+        }
+        do {
+            return try JSONDecoder().decode([SettingSection].self, from: data)
+        } catch {
+            print("Failed to decode settings layout: \(error)")
+            return defaultSections()
+        }
+    }
+
+    func resolveDestination(for id: String) -> AnyView {
+        switch id {
+        case "analytics": return AnyView(AnalyticsSettingsListView())
+        case "calendar": return AnyView(CalendarSettingsListView(calendarManager: calendarManager, calendarViewModel: calendarViewModel))
+        case "auth": return AnyView(AuthenticationListView(auth: auth))
+        case "health": return AnyView(HealthStatsListView())
+        case "icloud": return AnyView(iCloudListView(iCloudStatus: iCloudStatus))
+        case "music": return AnyView(MusicListView(musicManager: musicManager))
+        case "notifications": return AnyView(NotificationTestView())
+        case "onboarding": return AnyView(OnboardingListView(hasCompletedOnboarding: $hasCompletedOnboarding))
+        case "reminders": return AnyView(RemindersListView(reminderManager: reminderManager))
+        case "subscriptions": return AnyView(SubscriptionListView(viewModel: SubscriptionViewModel(mock: true)))
+        case "theme": return AnyView(ThemeSelectionView())
+        case "cache": return AnyView(CacheSettingsListView())
+        case "review": return AnyView(AppReviewListView())
+        case "contextual": return AnyView(ContextualSettingListView(title: "Advanced", options: groupedContextualOptions))
+        default:
+            if let setting = inlineContextualOptions.first(where: { $0.id.uuidString == id }) {
+                return AnyView(Button(String(localized: setting.title), action: setting.action))
+            }
+            return AnyView(EmptyView())
+        }
+    }
+
+    func defaultSections() -> [SettingSection] {
+        [
+            SettingSection(
+                title: "General",
+                items: [
+                    SettingItem(title: "Analytics", icon: "gear", destinationID: "analytics"),
+                    SettingItem(title: "Calendar", icon: "calendar", destinationID: "calendar"),
+                    SettingItem(title: "Authentication", icon: "lock", destinationID: "auth"),
+                    SettingItem(title: "Health", icon: "heart", destinationID: "health"),
+                    SettingItem(title: "iCloud", icon: "icloud", destinationID: "icloud"),
+                    SettingItem(title: "Music", icon: "music.quarternote.3", destinationID: "music"),
+                    SettingItem(title: "Push Notifications", icon: "bell", destinationID: "notifications"),
+                    SettingItem(title: "Onboarding", icon: "chart.line.text.clipboard", destinationID: "onboarding"),
+                    SettingItem(title: "Reminders", icon: "checklist", destinationID: "reminders"),
+                    SettingItem(title: "Subscriptions", icon: "dollarsign.arrow.trianglehead.counterclockwise.rotate.90", destinationID: "subscriptions"),
+                    SettingItem(title: "Theme", icon: "paintpalette", destinationID: "theme"),
+                    SettingItem(title: "Cache", icon: "externaldrive", destinationID: "cache"),
+                    SettingItem(title: "Review App", icon: "star", destinationID: "review")
+                ]
+            ),
+            SettingSection(
+                title: "Advanced",
+                items: groupedContextualOptions.map {
+                    SettingItem(title: String(localized: $0.title), icon: $0.systemImage ?? "gear", destinationID: $0.id.uuidString)
+                } + [
+                    SettingItem(
+                        title: "Contextual Settings",
+                        icon: "slider.horizontal.3",
+                        destinationID: "contextual"
+                    )
+                ]
+            )
+        ]
     }
 }
