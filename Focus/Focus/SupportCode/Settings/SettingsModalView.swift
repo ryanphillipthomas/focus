@@ -10,15 +10,13 @@ struct SettingsModalView: View {
     @EnvironmentObject var model: ThemeModel
     @Bindable var auth: AuthViewModel
 
-    let inlineContextualOptions: [ContextualSetting]
-    let groupedContextualOptions: [ContextualSetting]
+    let contextualOptions: [ContextualSetting]
 
     var body: some View {
         NavigationView {
             SettingsView(
                 auth: auth,
-                inlineContextualOptions: inlineContextualOptions,
-                groupedContextualOptions: groupedContextualOptions
+                contextualOptions: contextualOptions
             )
         }
         .presentationDetents([.medium, .large])

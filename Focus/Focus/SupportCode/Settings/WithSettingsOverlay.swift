@@ -12,17 +12,14 @@ struct WithSettingsOverlay<Content: View>: View {
     @State var auth = AuthViewModel()
 
     let content: Content
-    let inlineContextualOptions: [ContextualSetting]
-    let groupedContextualOptions: [ContextualSetting]
+    let contextualOptions: [ContextualSetting]
 
     init(
-        inlineContextualOptions: [ContextualSetting] = [],
-        groupedContextualOptions: [ContextualSetting] = [],
+        contextualOptions: [ContextualSetting] = [],
         @ViewBuilder content: () -> Content
     ) {
         self.content = content()
-        self.inlineContextualOptions = inlineContextualOptions
-        self.groupedContextualOptions = groupedContextualOptions
+        self.contextualOptions = contextualOptions
     }
 
     var body: some View {
@@ -33,8 +30,7 @@ struct WithSettingsOverlay<Content: View>: View {
         .sheet(isPresented: $showSettings) {
             SettingsModalView(
                 auth: auth,
-                inlineContextualOptions: inlineContextualOptions,
-                groupedContextualOptions: groupedContextualOptions
+                contextualOptions: contextualOptions,
             )
             .environmentObject(model)
         }

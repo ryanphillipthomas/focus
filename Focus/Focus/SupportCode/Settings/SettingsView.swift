@@ -56,8 +56,7 @@ struct SettingsView: View {
     @State private var isEditing = false
     @State private var sections: [SettingSection] = []
 
-    let inlineContextualOptions: [ContextualSetting]
-    let groupedContextualOptions: [ContextualSetting]
+    let contextualOptions: [ContextualSetting]
 
     var body: some View {
         NavigationStack {
@@ -175,11 +174,8 @@ struct SettingsView: View {
         case "theme": return AnyView(ThemeSelectionView())
         case "cache": return AnyView(CacheSettingsListView())
         case "review": return AnyView(AppReviewListView())
-        case "contextual": return AnyView(ContextualSettingListView(title: "Advanced", options: groupedContextualOptions))
+        case "contextual": return AnyView(ContextualSettingListView(title: "Advanced", options: contextualOptions))
         default:
-            if let setting = inlineContextualOptions.first(where: { $0.id.uuidString == id }) {
-                return AnyView(Button(String(localized: setting.title), action: setting.action))
-            }
             return AnyView(EmptyView())
         }
     }
@@ -206,14 +202,8 @@ struct SettingsView: View {
             ),
             SettingSection(
                 title: "Advanced",
-                items: groupedContextualOptions.map {
-                    SettingItem(title: String(localized: $0.title), icon: $0.systemImage ?? "gear", destinationID: $0.id.uuidString)
-                } + [
-                    SettingItem(
-                        title: "Contextual Settings",
-                        icon: "slider.horizontal.3",
-                        destinationID: "contextual"
-                    )
+                items: [
+                    SettingItem(title: "Contextual Settings", icon: "slider.horizontal.3", destinationID: "contextual")
                 ]
             )
         ]

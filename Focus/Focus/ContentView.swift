@@ -4,10 +4,7 @@ struct ContentView: View {
     @State var auth = AuthViewModel()
 
     var body: some View {
-        WithSettingsOverlay(
-            inlineContextualOptions: inlineContextualOptions,
-            groupedContextualOptions: groupedContextualOptions
-        ) {
+        WithSettingsOverlay(contextualOptions: contextualOptions) {
             if auth.user != nil {
                 FocusListView()
             } else {
@@ -16,7 +13,7 @@ struct ContentView: View {
         }
     }
     
-    var inlineContextualOptions: [ContextualSetting] {
+    var contextualOptions: [ContextualSetting] {
         [
             ContextualSetting(
                 title: "Login as Test Account",
@@ -29,21 +26,6 @@ struct ContentView: View {
             )
         ]
     }
-
-    var groupedContextualOptions: [ContextualSetting] {
-        [
-            ContextualSetting(
-                title: "Login as Test Account 2",
-                systemImage: "person.crop.circle.fill",
-                action: {
-                    Task {
-                        await auth.signIn(email: "ryanphillipthomas@gmail.com", password: "12171217")
-                    }
-                }
-            )
-        ]
-    }
-
 }
 
 #Preview {
