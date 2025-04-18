@@ -36,5 +36,16 @@ class InAppLogStore: ObservableObject {
     func allLogs(for provider: String) -> [LogEntry] {
         logsByProvider[provider] ?? []
     }
+    
+    func allLogs() -> [LogEntry] {
+        logsByProvider.values.flatMap { $0 }
+    }
+
+    func clearAll() {
+        DispatchQueue.main.async {
+            self.logsByProvider.removeAll()
+        }
+    }
+
 }
 
