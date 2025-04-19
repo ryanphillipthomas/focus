@@ -96,34 +96,24 @@ class AuthViewModel: ObservableObject {
         }
         
         let config = GIDConfiguration(clientID: clientID)
-        
-        // ✅ Step 1: Start sign-in (no hint, no additionalScopes here)
         GIDSignIn.sharedInstance.configuration = config
-        GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { signInResult, error in
+
+        // 👉 Add Gmail read-only scope
+        let additionalScopes = ["https://www.googleapis.com/auth/gmail.readonly"]
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: viewController, hint: nil, additionalScopes: additionalScopes) { signInResult, error in
             if let error = error {
                 self.errorMessage = error.localizedDescription
                 InAppLogStore.shared.append("Google Sign-In failed: \(error.localizedDescription)", for: "Auth", type: .authentication)
                 return
             }
-            
+
             guard let signInResult = signInResult else {
                 self.errorMessage = "No sign-in result"
                 return
             }
-            
-            // ✅ Step 2: Add Gmail scope (after basic sign-in)
-            let grantedScopes = signInResult.user.grantedScopes ?? []
-            if !grantedScopes.contains("https://www.googleapis.com/auth/gmail.readonly") {
-                signInResult.user.addScopes(["https://www.googleapis.com/auth/gmail.readonly"], presenting: viewController) { user, error in
-                    if let error = error {
-                        self.errorMessage = "Failed to add Gmail scope: \(error.localizedDescription)"
-                        return
-                    }
-                    self.finishGoogleSignIn(user: signInResult.user)
-                }
-            } else {
-                self.finishGoogleSignIn(user: signInResult.user)
-            }
+
+            self.finishGoogleSignIn(user: signInResult.user)
         }
     }
     
@@ -158,6 +148,45 @@ class AuthViewModel: ObservableObject {
         }
     }
 
+    func fetchGmailInbox(using accessToken: String, completion: @escaping ([String]) -> Void) {
+        let url = URL(string: "https://gmail.googleapis.com/gmail/v1/users/me/messages")!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
 
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("❌ Gmail API error: \(error)")
+                return
+            }
+
+            guard let data = data else {
+                print("❌ No data received from Gmail API")
+                return
+            }
+
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                let messages = json?["messages"] as? [[String: Any]] ?? []
+
+                let messageIDs = messages.compactMap { $0["id"] as? String }
+                print("✅ Fetched \(messageIDs.count) messages")
+                completion(messageIDs)
+            } catch {
+                print("❌ Failed to parse Gmail API response: \(error)")
+            }
+        }.resume()
+    }
+    
+    func fetchEmailDetail(id: String, accessToken: String) {
+        let url = URL(string: "https://gmail.googleapis.com/gmail/v1/users/me/messages/\(id)?format=metadata")!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let data = data {
+                print(String(data: data, encoding: .utf8) ?? "")
+            }
+        }.resume()
+    }
 }
 
