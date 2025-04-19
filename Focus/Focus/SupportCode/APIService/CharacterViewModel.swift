@@ -16,7 +16,7 @@ class CharacterViewModel: ObservableObject {
 
     func getPerson1() async {
         do {
-            let response: CharacterResponse = try await APIManager.shared.get("people/1", responseType: CharacterResponse.self)
+            let response: CharacterResponse = try await APIManager.shared.get("people/1", responseType: CharacterResponse.self, provider: .swapi)
             let fetched = response.result.properties
 
             character = fetched
