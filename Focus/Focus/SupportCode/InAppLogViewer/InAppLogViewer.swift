@@ -9,12 +9,23 @@ import SwiftUI
 
 struct InAppLogViewer: View {
     @StateObject private var store = InAppLogStore.shared
+    @State private var selectedLogType: LogType? = nil
+    @State private var searchText: String = ""
+
     let provider: String
 
     @State private var showClearConfirmation = false
 
     var body: some View {
-        let logs = store.allLogs(for: provider)
+        let logs: [LogEntry] = {
+            let allLogs = provider == "All"
+                ? store.logsByProvider.values.flatMap { $0 }
+                : store.allLogs(for: provider)
+
+            return allLogs
+                .filter { selectedLogType == nil || $0.type == selectedLogType }
+                .filter { searchText.isEmpty || $0.message.localizedCaseInsensitiveContains(searchText) }
+        }()
 
         Group {
             if logs.isEmpty {
@@ -53,8 +64,22 @@ struct InAppLogViewer: View {
                 }
             }
         }
+        .searchable(text: $searchText, prompt: "Search logs")
         .navigationTitle(provider)
         .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Picker("Filter by Type", selection: $selectedLogType) {
+                        Text("All").tag(LogType?.none)
+                        ForEach(LogType.allCases, id: \.self) { type in
+                            Text(String(describing: type).capitalized).tag(Optional(type))
+                        }
+                    }
+                } label: {
+                    Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
+                }
+            }
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     Button {

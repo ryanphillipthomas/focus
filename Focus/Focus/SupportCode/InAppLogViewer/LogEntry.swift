@@ -15,7 +15,7 @@ struct LogEntry: Identifiable {
 }
 
 enum LogType {
-    case event, screen, user, startup, generic, health, calendar, authentication, icloud, music, notifications, crash, onboarding, reminders, cache
+    case event, screen, user, startup, generic, health, calendar, authentication, icloud, music, notifications, crash, onboarding, reminders, cache, api
 
     var symbolName: String {
         switch self {
@@ -34,6 +34,7 @@ enum LogType {
         case .onboarding: return "hand.tap.fill"
         case .reminders: return "checkmark.circle.fill"
         case .cache: return "internaldrive.fill"
+        case .api: return "network"
         }
     }
 
@@ -54,8 +55,11 @@ enum LogType {
         case .onboarding: return .mint
         case .reminders: return .cyan
         case .cache: return .brown
+        case .api: return .blue
         }
     }
 }
 
-
+extension LogType: CaseIterable, Identifiable {
+    var id: Self { self }
+}

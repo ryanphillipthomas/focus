@@ -28,8 +28,12 @@ class InAppLogStore: ObservableObject {
     }
 
     func clear(provider: String) {
-        DispatchQueue.main.async {
-            self.logsByProvider[provider] = []
+        if provider == "All" {
+            self.clearAll()
+        } else {
+            DispatchQueue.main.async {
+                self.logsByProvider[provider] = []
+            }
         }
     }
 

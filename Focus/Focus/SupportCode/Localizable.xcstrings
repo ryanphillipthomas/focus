@@ -19,6 +19,9 @@
     "Advanced" : {
 
     },
+    "All" : {
+
+    },
     "Analytics" : {
 
     },
@@ -89,6 +92,12 @@
 
     },
     "Fetch Reminders" : {
+
+    },
+    "Filter" : {
+
+    },
+    "Filter by Type" : {
 
     },
     "Firebase Logs" : {
@@ -221,6 +230,9 @@
 
     },
     "Review App" : {
+
+    },
+    "Search logs" : {
 
     },
     "Select Calendar" : {
