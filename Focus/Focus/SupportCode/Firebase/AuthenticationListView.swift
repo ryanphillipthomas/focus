@@ -7,6 +7,7 @@
 
 
 import SwiftUI
+import GoogleSignInSwift
 
 struct AuthenticationListView: View {
     @ObservedObject var auth: AuthViewModel
@@ -22,6 +23,15 @@ struct AuthenticationListView: View {
                 } label: {
                     Label("Log Out", systemImage: "arrow.backward.square")
                 }
+            }
+            Section(){
+                GoogleSignInButton {
+                    if let topVC = UIApplication.shared.topViewController() {
+                        auth.signInWithGoogle(presenting: topVC)
+                    }
+                }
+                .frame(height: 50)
+                .padding()
             }
             NavigationLink("Logs") {
                 InAppLogViewer(provider: "Auth")

@@ -61,3 +61,22 @@ struct FocusApp: App {
         .modelContainer(sharedModelContainer)
     }
 }
+
+extension UIApplication {
+    func topViewController(base: UIViewController? = nil) -> UIViewController? {
+        let base = base ?? UIApplication.shared.connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+            .first?.rootViewController
+
+        if let nav = base as? UINavigationController {
+            return topViewController(base: nav.visibleViewController)
+        } else if let tab = base as? UITabBarController,
+                  let selected = tab.selectedViewController {
+            return topViewController(base: selected)
+        } else if let presented = base?.presentedViewController {
+            return topViewController(base: presented)
+        }
+
+        return base
+    }
+}

@@ -16,6 +16,15 @@
 	<string>We use your health data to optimize your focus and scheduling.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>We use your health data to recommend time blocks and tasks</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.263333026829-rfha4en13mtaq2g0fa2u3eip0m2nfq5n</string>
+        </array>
+      </dict>
+    </array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
