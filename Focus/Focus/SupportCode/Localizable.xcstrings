@@ -4,7 +4,16 @@
     "" : {
 
     },
+    "%@" : {
+
+    },
     "%lld" : {
+
+    },
+    "❌ %@" : {
+
+    },
+    "⭐️ %@" : {
 
     },
     "Accent Color" : {
@@ -35,6 +44,9 @@
 
     },
     "Authentication" : {
+
+    },
+    "Birth Year: %@" : {
 
     },
     "Cache" : {
@@ -91,6 +103,9 @@
     "Enter your email" : {
 
     },
+    "Fetch Luke Skywalker" : {
+
+    },
     "Fetch Reminders" : {
 
     },
@@ -113,6 +128,9 @@
 
     },
     "Free" : {
+
+    },
+    "Gender: %@" : {
 
     },
     "Get Started" : {
@@ -282,6 +300,9 @@
           }
         }
       }
+    },
+    "SWAPI Test" : {
+
     },
     "Test All Notifications" : {
 

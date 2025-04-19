@@ -161,6 +161,7 @@ struct SettingsView: View {
 
     func resolveDestination(for id: String) -> AnyView {
         switch id {
+        case "api": return AnyView(CharacterTestView())
         case "logs": return AnyView(InAppLogViewer(provider: "All"))
         case "analytics": return AnyView(AnalyticsSettingsListView())
         case "calendar": return AnyView(CalendarSettingsListView(calendarManager: calendarManager, calendarViewModel: calendarViewModel))
@@ -186,6 +187,7 @@ struct SettingsView: View {
             SettingSection(
                 title: "General",
                 items: [
+                    SettingItem(title: "API", icon: "network", destinationID: "api"),
                     SettingItem(title: "Logs", icon: "book.pages", destinationID: "logs"),
                     SettingItem(title: "Analytics", icon: "gear", destinationID: "analytics"),
                     SettingItem(title: "Calendar", icon: "calendar", destinationID: "calendar"),

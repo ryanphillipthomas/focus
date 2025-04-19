@@ -14,6 +14,7 @@
 		0AA367A82DA5B6AE00F2B3F8 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A72DA5B6AE00F2B3F8 /* FirebaseFirestore */; };
 		0AA367AA2DA5B6AE00F2B3F8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA367A92DA5B6AE00F2B3F8 /* FirebaseMessaging */; };
 		0AA368A82DA8AAE000F2B3F8 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 0AA368A72DA8AAE000F2B3F8 /* ViewInspector */; };
+		2C0469FF2DB353AF008331DC /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0469FE2DB353AF008331DC /* Alamofire */; };
 		2C227C702DA61170008953DA /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */; };
 		2C227CF02DA626D4008953DA /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 2C227CEF2DA626D4008953DA /* Mixpanel */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0469FF2DB353AF008331DC /* Alamofire in Frameworks */,
 				0AA367AA2DA5B6AE00F2B3F8 /* FirebaseMessaging in Frameworks */,
 				2C227C702DA61170008953DA /* FirebaseInAppMessaging-Beta in Frameworks */,
 				0AA367A02DA5B6AE00F2B3F8 /* FirebaseAnalytics in Frameworks */,
@@ -154,6 +156,7 @@
 				0AA367A92DA5B6AE00F2B3F8 /* FirebaseMessaging */,
 				2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */,
 				2C227CEF2DA626D4008953DA /* Mixpanel */,
+				2C0469FE2DB353AF008331DC /* Alamofire */,
 			);
 			productName = Focus;
 			productReference = 0A4909192DA182B9005DD72F /* Focus.app */;
@@ -242,6 +245,7 @@
 				0AA3679E2DA5B6AE00F2B3F8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2C227CEE2DA626D4008953DA /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				0AA368A62DA8AAE000F2B3F8 /* XCRemoteSwiftPackageReference "ViewInspector" */,
+				2C0469FD2DB353AF008331DC /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0A49091A2DA182B9005DD72F /* Products */;
@@ -669,6 +673,14 @@
 				minimumVersion = 0.10.1;
 			};
 		};
+		2C0469FD2DB353AF008331DC /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 		2C227CEE2DA626D4008953DA /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mixpanel/mixpanel-swift";
@@ -714,6 +726,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0AA368A62DA8AAE000F2B3F8 /* XCRemoteSwiftPackageReference "ViewInspector" */;
 			productName = ViewInspector;
+		};
+		2C0469FE2DB353AF008331DC /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C0469FD2DB353AF008331DC /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		2C227C6F2DA61170008953DA /* FirebaseInAppMessaging-Beta */ = {
 			isa = XCSwiftPackageProductDependency;
