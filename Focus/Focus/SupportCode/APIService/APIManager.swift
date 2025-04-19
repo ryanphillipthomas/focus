@@ -78,19 +78,3 @@ extension APIManager {
         return response.choices.first?.message.content ?? "No response"
     }
 }
-
-
-
-// MARK: - AuthInterceptor
-
-class AuthInterceptor: RequestInterceptor, @unchecked Sendable {
-    var token: String {
-        return "Bearer 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"
-    }
-
-    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        var request = urlRequest
-        request.setValue(token, forHTTPHeaderField: "Authorization")
-        completion(.success(request))
-    }
-}

@@ -68,7 +68,7 @@ struct OpenAIView: View {
         }
         .navigationTitle("Chat")
         .navigationDestination(isPresented: $showLogs) {
-            InAppLogViewer(provider: "OpenAI")
+            InAppLogViewer(provider: "API")
         }
     }
 }
