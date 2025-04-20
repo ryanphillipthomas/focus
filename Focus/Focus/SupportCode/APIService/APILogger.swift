@@ -6,12 +6,29 @@ class APILogger: EventMonitor {
     let queue = DispatchQueue(label: "com.focus.apiLogger")
 
     // MARK: - Request Lifecycle
-
+    
     func requestDidResume(_ request: Request) {
-        let url = request.request?.url?.absoluteString ?? "unknown URL"
-        let method = request.request?.httpMethod ?? "UNKNOWN"
-        log("Request Started: [\(method)] \(url)")
+        guard let req = request.request else { return }
+
+        let url = req.url?.absoluteString ?? "unknown URL"
+        let method = req.httpMethod ?? "GET"
+        let headers = req.allHTTPHeaderFields ?? [:]
+        let body = req.httpBody
+
+        // Build cURL
+        var curl = "curl -X \(method) '\(url)'"
+        for (key, value) in headers {
+            curl += " -H '\(key): \(value)'"
+        }
+
+        if let bodyData = body,
+           let bodyString = String(data: bodyData, encoding: .utf8) {
+            curl += " -d '\(bodyString)'"
+        }
+
+        log("Request Started: [\(method)] \(url) cURL:\n\(curl)")
     }
+
 
     func requestDidFinish(_ request: Request) {
         guard let req = request.request,
