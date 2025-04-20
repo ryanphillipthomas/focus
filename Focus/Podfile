@@ -1,0 +1,17 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '13.0'
+use_frameworks!
+
+target 'Focus' do
+  pod 'MailCore2', :git => 'https://github.com/readdle/mailcore2.git', :branch => 'spark2'
+
+  target 'FocusTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'FocusUITests' do
+    # Pods for testing
+  end
+end

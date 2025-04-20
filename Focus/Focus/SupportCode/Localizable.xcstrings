@@ -10,12 +10,6 @@
     "%lld" : {
 
     },
-    "❌ %@" : {
-
-    },
-    "⭐️ %@" : {
-
-    },
     "Accent Color" : {
 
     },
@@ -34,6 +28,9 @@
     "Analytics" : {
 
     },
+    "API" : {
+
+    },
     "App Icon" : {
 
     },
@@ -46,9 +43,6 @@
     "Authentication" : {
 
     },
-    "Birth Year: %@" : {
-
-    },
     "Cache" : {
 
     },
@@ -56,6 +50,9 @@
 
     },
     "Cancel" : {
+
+    },
+    "Chat" : {
 
     },
     "Choose Your Plan" : {
@@ -130,9 +127,6 @@
     "Free" : {
 
     },
-    "Gender: %@" : {
-
-    },
     "Get Started" : {
 
     },
@@ -175,6 +169,9 @@
     "Login as Test Account" : {
 
     },
+    "Login View" : {
+
+    },
     "Logs" : {
 
     },
@@ -185,6 +182,9 @@
 
     },
     "Music" : {
+
+    },
+    "Name" : {
 
     },
     "Need an account? Sign up" : {
@@ -212,6 +212,9 @@
 
     },
     "Play Sample Song" : {
+
+    },
+    "Profile Photo" : {
 
     },
     "Push Notifications" : {
@@ -268,6 +271,9 @@
     "Setup Notifications" : {
 
     },
+    "Sign In with Google" : {
+
+    },
     "Sign Up" : {
 
     },
@@ -301,9 +307,6 @@
         }
       }
     },
-    "SWAPI Test" : {
-
-    },
     "Test All Notifications" : {
 
     },
@@ -316,7 +319,16 @@
     "Time Remaining: %@" : {
 
     },
+    "Type a message..." : {
+
+    },
     "Unhide" : {
+
+    },
+    "User Info" : {
+
+    },
+    "View Logs" : {
 
     },
     "View Onboarding Flow" : {

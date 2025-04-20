@@ -47,6 +47,20 @@ class APILogger: EventMonitor {
         log("Request Failed: \(url) [Status: \(statusCode), Duration: \(String(format: "%.2fs", duration))] - \(error.localizedDescription)")
         Crashlytics.crashlytics().record(error: error)
     }
+    
+    func request<Value>(_ request: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
+        let url = request.request?.url?.absoluteString ?? "unknown URL"
+        let statusCode = request.response?.statusCode ?? -1
+        let duration = request.metrics?.taskInterval.duration ?? 0
+
+        switch response.result {
+        case .success:
+            log("Response Success: \(url) [Status: \(statusCode), Duration: \(String(format: "%.2fs", duration))]")
+        case .failure(let error):
+            log("Response Failed: \(url) [Status: \(statusCode), Duration: \(String(format: "%.2fs", duration))] - \(error.localizedDescription)")
+        }
+    }
+
 
     // MARK: - Shared Logging Utility
 
