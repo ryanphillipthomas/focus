@@ -157,6 +157,9 @@
     "iCloud" : {
 
     },
+    "Inline Tip" : {
+
+    },
     "Let’s plan your first focus block" : {
 
     },
@@ -223,6 +226,9 @@
     "Play Sample Song" : {
 
     },
+    "Popover Tip" : {
+
+    },
     "Profile Photo" : {
 
     },
@@ -254,6 +260,9 @@
 
     },
     "Reset Password" : {
+
+    },
+    "Reset Tips" : {
 
     },
     "Restore Purchases" : {
@@ -325,7 +334,16 @@
     "Theme" : {
 
     },
+    "This is an example of a inline tip." : {
+
+    },
+    "This is an example of a popover tip." : {
+
+    },
     "Time Remaining: %@" : {
+
+    },
+    "Tips" : {
 
     },
     "Type a message..." : {

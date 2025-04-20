@@ -10,6 +10,7 @@ import SwiftData
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import TipKit
 
 @main
 struct FocusApp: App {
@@ -41,6 +42,10 @@ struct FocusApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    init() {
+        TipKitManager.shared.configure()
+    }
 
     var body: some Scene {
         WindowGroup {

@@ -63,6 +63,7 @@ struct FocusListView: View {
                     Button(action: addItem) {
                         Label("Add", systemImage: "plus")
                     }
+
                 }
 #else
                 ToolbarItem {

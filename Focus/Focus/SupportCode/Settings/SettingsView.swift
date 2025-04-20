@@ -161,6 +161,7 @@ struct SettingsView: View {
 
     func resolveDestination(for id: String) -> AnyView {
         switch id {
+        case "tipkit": return AnyView(TipKitView())
         case "openai": return AnyView(OpenAIView())
         case "api": return AnyView(CharacterTestView())
         case "logs": return AnyView(InAppLogViewer(provider: "All"))
@@ -189,6 +190,7 @@ struct SettingsView: View {
             SettingSection(
                 title: "General",
                 items: [
+                    SettingItem(title: "TipKit", icon: "lightbulb", destinationID: "tipkit"),
                     SettingItem(title: "OpenAI", icon: "message", destinationID: "openai"),
                     SettingItem(title: "API", icon: "network", destinationID: "api"),
                     SettingItem(title: "Gmail", icon: "envelope", destinationID: "gmail"),
