@@ -164,6 +164,7 @@ struct SettingsView: View {
         case "openai": return AnyView(OpenAIView())
         case "api": return AnyView(CharacterTestView())
         case "logs": return AnyView(InAppLogViewer(provider: "All"))
+        case "gmail": return AnyView(GmailLogTriggerView(accessToken: auth.accessToken))
         case "analytics": return AnyView(AnalyticsSettingsListView())
         case "calendar": return AnyView(CalendarSettingsListView(calendarManager: calendarManager, calendarViewModel: calendarViewModel))
         case "auth": return AnyView(AuthenticationListView(auth: auth))
@@ -190,6 +191,7 @@ struct SettingsView: View {
                 items: [
                     SettingItem(title: "OpenAI", icon: "message", destinationID: "openai"),
                     SettingItem(title: "API", icon: "network", destinationID: "api"),
+                    SettingItem(title: "Gmail", icon: "envelope", destinationID: "gmail"),
                     SettingItem(title: "Logs", icon: "book.pages", destinationID: "logs"),
                     SettingItem(title: "Analytics", icon: "gear", destinationID: "analytics"),
                     SettingItem(title: "Calendar", icon: "calendar", destinationID: "calendar"),

@@ -13,6 +13,7 @@ import SwiftUI
 @Observable
 class AuthViewModel: ObservableObject {
     var user: User? = Auth.auth().currentUser
+    var accessToken: String? // <- ✅ Store the token here
     var errorMessage: String?
     
     // 🔐 Store the listener handle here
@@ -23,6 +24,8 @@ class AuthViewModel: ObservableObject {
         self.authStateHandle = Auth.auth().addStateDidChangeListener { _, user in
             self.user = user
         }
+        
+        self.accessToken = UserDefaults.standard.string(forKey: "googleAccessToken")
     }
     
     deinit {
@@ -127,6 +130,8 @@ class AuthViewModel: ObservableObject {
         }
         
         let accessToken = user.accessToken
+        self.accessToken = accessToken.tokenString // ✅ Save it
+
         let credential = GoogleAuthProvider.credential(
             withIDToken: idToken.tokenString,
             accessToken: accessToken.tokenString

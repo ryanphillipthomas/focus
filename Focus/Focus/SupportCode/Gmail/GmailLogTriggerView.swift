@@ -9,21 +9,26 @@
 import SwiftUI
 
 struct GmailLogTriggerView: View {
-    let accessToken: String
+    let accessToken: String?
 
     var body: some View {
         List {
             Section(header: Text("Gmail Integration")) {
                 Button {
-                    InAppLogStore.shared.append("🔄 Starting Gmail fetch...", for: "Gmail", type: .authentication)
-                    GmailViewModel().fetchAndLogInbox(accessToken: accessToken)
+                    guard let token = accessToken else {
+                        InAppLogStore.shared.append("No access token available", for: "Gmail", type: .authentication)
+                        return
+                    }
+                    InAppLogStore.shared.append("Starting Gmail fetch...", for: "Gmail", type: .authentication)
+                    GmailViewModel().fetchAndLogInbox(accessToken: token)
                 } label: {
                     Label("Fetch Gmail Logs", systemImage: "envelope.badge")
                 }
+                .disabled(accessToken == nil)
             }
 
             Section {
-                NavigationLink(destination: InAppLogViewer()) {
+                NavigationLink(destination: InAppLogViewer(provider: "Gmail")) {
                     Label("View Logs", systemImage: "doc.plaintext")
                 }
             }

@@ -15,7 +15,7 @@ struct LogEntry: Identifiable {
 }
 
 enum LogType {
-    case event, screen, user, startup, generic, health, calendar, authentication, icloud, music, notifications, crash, onboarding, reminders, cache, api
+    case event, screen, user, startup, generic, health, calendar, authentication, icloud, music, notifications, crash, onboarding, reminders, cache, api, gmail
 
     var symbolName: String {
         switch self {
@@ -35,11 +35,13 @@ enum LogType {
         case .reminders: return "checkmark.circle.fill"
         case .cache: return "internaldrive.fill"
         case .api: return "network"
+        case .gmail: return "envelope.fill"
         }
     }
 
     var color: Color {
         switch self {
+        case .gmail: return .yellow
         case .event: return .green
         case .screen: return .blue
         case .user: return .orange
