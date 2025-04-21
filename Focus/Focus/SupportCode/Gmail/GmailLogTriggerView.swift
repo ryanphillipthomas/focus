@@ -22,7 +22,7 @@ struct GmailLogTriggerView: View {
                     InAppLogStore.shared.append("Starting Gmail fetch...", for: "Gmail", type: .authentication)
                     GmailViewModel().fetchAndLogInbox(accessToken: token)
                 } label: {
-                    Label("Fetch Gmail Logs", systemImage: "envelope.badge")
+                    Label("Fetch Gmail", systemImage: "envelope.badge")
                 }
                 .disabled(accessToken == nil)
             }

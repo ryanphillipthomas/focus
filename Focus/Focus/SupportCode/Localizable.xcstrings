@@ -76,6 +76,9 @@
     "Customize" : {
 
     },
+    "Day" : {
+
+    },
     "Details" : {
 
     },
@@ -100,7 +103,7 @@
     "Enter your email" : {
 
     },
-    "Fetch Gmail Logs" : {
+    "Fetch Gmail" : {
 
     },
     "Fetch Luke Skywalker" : {
@@ -119,6 +122,9 @@
 
     },
     "Focus List" : {
+
+    },
+    "Focus vs. Distraction" : {
 
     },
     "Forgot Password" : {
@@ -188,6 +194,9 @@
 
     },
     "Manage Subscription" : {
+
+    },
+    "Minutes" : {
 
     },
     "Mixpanel Logs" : {
@@ -346,6 +355,9 @@
     "Tips" : {
 
     },
+    "Type" : {
+
+    },
     "Type a message..." : {
 
     },
@@ -355,10 +367,16 @@
     "User Info" : {
 
     },
+    "Value" : {
+
+    },
     "View Logs" : {
 
     },
     "View Onboarding Flow" : {
+
+    },
+    "Weekly Focus Score" : {
 
     },
     "Welcome to Focus" : {

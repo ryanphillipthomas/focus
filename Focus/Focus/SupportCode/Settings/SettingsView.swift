@@ -161,6 +161,8 @@ struct SettingsView: View {
 
     func resolveDestination(for id: String) -> AnyView {
         switch id {
+        case "charts": return AnyView(ChartView(manager: ChartManager()))
+        case "gradientview": return AnyView(GradientView())
         case "tipkit": return AnyView(TipKitView())
         case "openai": return AnyView(OpenAIView())
         case "api": return AnyView(CharacterTestView())
@@ -190,6 +192,8 @@ struct SettingsView: View {
             SettingSection(
                 title: "General",
                 items: [
+                    SettingItem(title: "Charts", icon: "chart.bar", destinationID: "charts"),
+                    SettingItem(title: "Gradient", icon: "rainbow", destinationID: "gradientview"),
                     SettingItem(title: "TipKit", icon: "lightbulb", destinationID: "tipkit"),
                     SettingItem(title: "OpenAI", icon: "message", destinationID: "openai"),
                     SettingItem(title: "API", icon: "network", destinationID: "api"),

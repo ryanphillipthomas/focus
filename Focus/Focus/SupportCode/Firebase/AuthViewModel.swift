@@ -131,6 +131,7 @@ class AuthViewModel: ObservableObject {
         
         let accessToken = user.accessToken
         self.accessToken = accessToken.tokenString // ✅ Save it
+        UserDefaults.standard.set(self.accessToken, forKey: "googleAccessToken")
 
         let credential = GoogleAuthProvider.credential(
             withIDToken: idToken.tokenString,
