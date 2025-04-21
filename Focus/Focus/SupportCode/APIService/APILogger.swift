@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 import FirebaseCrashlytics
 
-class APILogger: EventMonitor {
+final class APILogger: EventMonitor {
     let queue = DispatchQueue(label: "com.focus.apiLogger")
 
     // MARK: - Request Lifecycle
